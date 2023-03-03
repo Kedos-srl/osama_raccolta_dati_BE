@@ -64,6 +64,81 @@
                   value="it.grupposcai.osamard.dao.FornitoreDao"/>
     </bean>
 
+    <bean id="MaterialeDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.MaterialeDao"/>
+    </bean>
+
+
+    <bean id="CampioniDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.CampioniDao"/>
+    </bean>
+
+
+    <bean id="CertificazioniFabbricaDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.CertificazioniFabbricaDao"/>
+    </bean>
+
+
+    <bean id="CertificazioniMaterialiDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.CertificazioniMaterialiDao"/>
+    </bean>
+
+
+    <bean id="DimensioniDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.DimensioniDao"/>
+    </bean>
+
+
+    <bean id="FornitoreCategoriaDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.FornitoreCategoriaDao"/>
+    </bean>
+
+    <bean id="FornitoreSubcategoriaDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.FornitoreSubcategoriaDao"/>
+    </bean>
+
+    <bean id="MoqDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.MoqDao"/>
+    </bean>
+
+    <bean id="ProduzioneDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.ProduzioneDao"/>
+    </bean>
+
+    <bean id="TradingDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.TradingDao"/>
+    </bean>
+
 </beans>
 
 

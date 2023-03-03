@@ -1,134 +1,134 @@
 {
-	"info": {
-		"_postman_id": "0c34df04-abe8-4d6b-a55d-f6d23859fc94",
-		"name": "API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19731385"
-	},
-	"item": [
-		{
-			"name": "Utente",
-			"item": [
-				{
-					"name": "Logout",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"token\":\"{{token}}\"\n}"
-						},
-						"url": {
-							"raw": "{{host}}/rest/utente/logout",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"rest",
-								"utente",
-								"logout"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if(pm.response.code == 200){\r",
-									"    const response = pm.response.json();\r",
-									"    pm.environment.set(\"token\", response.result.token);\r",
-									"}\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\":\"andrea.zammataro@kedos-srl.it\",\n\t\"password\":\"test\"\n}"
-						},
-						"url": {
-							"raw": "{{host}}/rest/utente/login",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"rest",
-								"utente",
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"auth": {
-		"type": "basic",
-		"basic": [
-			{
-				"key": "username",
-				"value": "osamaRDApi",
-				"type": "string"
-			},
-			{
-				"key": "password",
-				"value": "0$4m!D5e@x+",
-				"type": "string"
-			},
-			{
-				"key": "saveHelperData",
-				"type": "any"
-			},
-			{
-				"key": "showPassword",
-				"value": false,
-				"type": "boolean"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	]
+  "info": {
+    "_postman_id": "0c34df04-abe8-4d6b-a55d-f6d23859fc94",
+    "name": "API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19731385"
+  },
+  "item": [
+    {
+      "name": "Utente",
+      "item": [
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"token\":\"{{token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{host}}/rest/utente/logout",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "rest",
+                "utente",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 200){\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", response.result.token);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"email\":\"andrea.zammataro@kedos-srl.it\",\n\t\"password\":\"test\"\n}"
+            },
+            "url": {
+              "raw": "{{host}}/rest/utente/login",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "rest",
+                "utente",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "osamaRDApi",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "0$4m!D5e@x+",
+        "type": "string"
+      },
+      {
+        "key": "saveHelperData",
+        "type": "any"
+      },
+      {
+        "key": "showPassword",
+        "value": false,
+        "type": "boolean"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
 }

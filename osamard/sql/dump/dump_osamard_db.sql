@@ -15,11 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-create database IF NOT EXISTS `osama_raccolta_dati`;
-
-
-use `osama_raccolta_dati`;
-
 --
 -- Table structure for table `campioni`
 --
@@ -36,7 +31,7 @@ CREATE TABLE `campioni` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,17 +40,18 @@ CREATE TABLE `campioni` (
 
 LOCK TABLES `campioni` WRITE;
 /*!40000 ALTER TABLE `campioni` DISABLE KEYS */;
+INSERT INTO `campioni` VALUES (1,'Free',0,'2023-03-03 16:30:34','2023-03-03 16:30:34',1,1),(2,'Real cost',0,'2023-03-03 16:30:34','2023-03-03 16:30:34',1,1),(3,'Double than real',0,'2023-03-03 16:30:34','2023-03-03 16:30:34',1,1);
 /*!40000 ALTER TABLE `campioni` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `certificati`
+-- Table structure for table `certificazioni_fabbrica`
 --
 
-DROP TABLE IF EXISTS `certificati`;
+DROP TABLE IF EXISTS `certificazioni_fabbrica`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `certificati` (
+CREATE TABLE `certificazioni_fabbrica` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nome` text NOT NULL,
   `DISABLED` tinyint(1) NOT NULL DEFAULT '0',
@@ -64,16 +60,46 @@ CREATE TABLE `certificati` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `certificati`
+-- Dumping data for table `certificazioni_fabbrica`
 --
 
-LOCK TABLES `certificati` WRITE;
-/*!40000 ALTER TABLE `certificati` DISABLE KEYS */;
-/*!40000 ALTER TABLE `certificati` ENABLE KEYS */;
+LOCK TABLES `certificazioni_fabbrica` WRITE;
+/*!40000 ALTER TABLE `certificazioni_fabbrica` DISABLE KEYS */;
+INSERT INTO `certificazioni_fabbrica` VALUES (1,'AUDIT',0,'2023-03-03 16:15:17','2023-03-03 16:15:17',1,1),(2,'BSCI',0,'2023-03-03 16:15:17','2023-03-03 16:15:17',1,1),(3,'SEDEX',0,'2023-03-03 16:15:17','2023-03-03 16:15:17',1,1),(4,'ISO',0,'2023-03-03 16:15:17','2023-03-03 16:15:17',1,1);
+/*!40000 ALTER TABLE `certificazioni_fabbrica` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `certificazioni_materiali`
+--
+
+DROP TABLE IF EXISTS `certificazioni_materiali`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `certificazioni_materiali` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nome` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `DISABLED` tinyint(1) NOT NULL DEFAULT '0',
+  `DT_INSERIMENTO` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DT_MODIFICA` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LAST_USER_MODIFIED` bigint NOT NULL,
+  `FIRST_USER` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `certificazioni_materiali`
+--
+
+LOCK TABLES `certificazioni_materiali` WRITE;
+/*!40000 ALTER TABLE `certificazioni_materiali` DISABLE KEYS */;
+INSERT INTO `certificazioni_materiali` VALUES (1,'REACH',0,'2023-03-03 16:18:31','2023-03-03 16:18:31',1,1),(2,'OEKO TEX',0,'2023-03-03 16:18:31','2023-03-03 16:18:31',1,1);
+/*!40000 ALTER TABLE `certificazioni_materiali` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -194,7 +220,7 @@ CREATE TABLE `fornitore_categoria` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,6 +229,7 @@ CREATE TABLE `fornitore_categoria` (
 
 LOCK TABLES `fornitore_categoria` WRITE;
 /*!40000 ALTER TABLE `fornitore_categoria` DISABLE KEYS */;
+INSERT INTO `fornitore_categoria` VALUES (1,'Writing',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(2,'Accessori scrittura',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(3,'Diary / Notes',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(4,'Living',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(5,'Accessori / Casalinghi ',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(6,'Arredo casa',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(7,'Storage',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(8,'Scatole / Gif Box',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1),(9,'Bags / Accessories',0,'2023-03-03 16:24:52','2023-03-03 16:24:52',1,1);
 /*!40000 ALTER TABLE `fornitore_categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +246,7 @@ CREATE TABLE `fornitore_certificati` (
   PRIMARY KEY (`id_fornitore`,`id_certificazione`),
   KEY `FK_fornitore_certificati` (`id_certificazione`),
   CONSTRAINT `FK_certificati_fornitore` FOREIGN KEY (`id_fornitore`) REFERENCES `fornitore` (`id`),
-  CONSTRAINT `FK_fornitore_certificati` FOREIGN KEY (`id_certificazione`) REFERENCES `certificati` (`id`)
+  CONSTRAINT `FK_fornitore_certificati` FOREIGN KEY (`id_certificazione`) REFERENCES `certificazioni_fabbrica` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -283,7 +310,7 @@ CREATE TABLE `fornitore_subcategoria` (
   PRIMARY KEY (`id`),
   KEY `FK_categoria` (`id_categoria`),
   CONSTRAINT `FK_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `fornitore_categoria` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,6 +319,7 @@ CREATE TABLE `fornitore_subcategoria` (
 
 LOCK TABLES `fornitore_subcategoria` WRITE;
 /*!40000 ALTER TABLE `fornitore_subcategoria` DISABLE KEYS */;
+INSERT INTO `fornitore_subcategoria` VALUES (1,'Penne',1,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(2,'Pennarelli',1,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(3,'Matite',1,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(4,'Correttori',1,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(5,'Towel - Spugna',4,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(6,'Bed sheet',4,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1),(7,'Tableware',4,0,'2023-03-03 16:28:01','2023-03-03 16:28:01',1,1);
 /*!40000 ALTER TABLE `fornitore_subcategoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,7 +428,7 @@ CREATE TABLE `moq` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -409,6 +437,7 @@ CREATE TABLE `moq` (
 
 LOCK TABLES `moq` WRITE;
 /*!40000 ALTER TABLE `moq` DISABLE KEYS */;
+INSERT INTO `moq` VALUES (1,'Per articolo',0,'2023-03-03 16:29:22','2023-03-03 16:29:22',1,1),(2,'Per colore',0,'2023-03-03 16:29:22','2023-03-03 16:29:22',1,1),(3,'Per Taglia',0,'2023-03-03 16:29:22','2023-03-03 16:29:22',1,1),(4,'Per ordine di acquisto',0,'2023-03-03 16:29:22','2023-03-03 16:29:22',1,1),(5,'Per spedizione',0,'2023-03-03 16:29:22','2023-03-03 16:29:22',1,1);
 /*!40000 ALTER TABLE `moq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +557,7 @@ CREATE TABLE `produzione` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,6 +566,7 @@ CREATE TABLE `produzione` (
 
 LOCK TABLES `produzione` WRITE;
 /*!40000 ALTER TABLE `produzione` DISABLE KEYS */;
+INSERT INTO `produzione` VALUES (1,'TT deposit',0,'2023-03-03 16:32:02','2023-03-03 16:32:02',1,1),(2,'LC',0,'2023-03-03 16:32:02','2023-03-03 16:32:02',1,1),(3,'30% deposit + 70% against BL',0,'2023-03-03 16:32:02','2023-03-03 16:32:02',1,1),(4,'30gg after goods arrival',0,'2023-03-03 16:32:02','2023-03-03 16:32:02',1,1),(5,'60gg after goods arrival',0,'2023-03-03 16:32:02','2023-03-03 16:32:02',1,1);
 /*!40000 ALTER TABLE `produzione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -556,7 +586,7 @@ CREATE TABLE `trading` (
   `LAST_USER_MODIFIED` bigint NOT NULL,
   `FIRST_USER` bigint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,6 +595,7 @@ CREATE TABLE `trading` (
 
 LOCK TABLES `trading` WRITE;
 /*!40000 ALTER TABLE `trading` DISABLE KEYS */;
+INSERT INTO `trading` VALUES (1,'Fabrica',0,'2023-03-03 16:12:58','2023-03-03 16:12:58',1,1),(2,'Real Maker',0,'2023-03-03 16:12:58','2023-03-03 16:12:58',1,1);
 /*!40000 ALTER TABLE `trading` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,4 +646,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-03 12:21:15
+-- Dump completed on 2023-03-03 17:37:30

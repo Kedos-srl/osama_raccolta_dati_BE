@@ -1,6 +1,6 @@
 package it.grupposcai.osamard.bean;
 
-public class Certificazioni extends CommonsAttribute {
+public class CertificazioniFabbrica extends CommonsAttribute {
 
     private static final long serialVersionUID = 1L;
 

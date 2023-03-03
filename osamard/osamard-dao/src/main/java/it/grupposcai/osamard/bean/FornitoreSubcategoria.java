@@ -6,7 +6,7 @@ public class FornitoreSubcategoria extends CommonsAttribute {
 
     private Long id;
     private Long id_categoria;
-    private Long nome;
+    private String nome;
 
     public Long getId() {
         return id;
@@ -24,11 +24,11 @@ public class FornitoreSubcategoria extends CommonsAttribute {
         this.id_categoria = id_categoria;
     }
 
-    public Long getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNome(Long nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 }
