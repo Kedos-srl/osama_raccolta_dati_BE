@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+    <!-- APPENDERS LIST -->
+    <!-- show log entries on console -->
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+    <appender name="osamard-appender" class="org.apache.log4j.FileAppender">
+        <param name="file" value="${log.path}"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{uniqueKeyLog4j}] [%-5p] %C{1} (%L) - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="mailAppender" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="1"/>
+        <param name="SMTPHost" value="172.31.13.65"/>
+        <param name="From" value="osamard.error@grupposcai.it"/>
+        <param name="To" value="andrea.zammataro@kedos-srl.it"/>
+        <param name="Subject" value="osamardApi ${dominioSito} Error Log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{uniqueKeyLog4j}] [%-5p] %C{1} (%L) - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error"/>
+            <param name="LevelMax" value="fatal"/>
+        </filter>
+    </appender>
+
+    <logger name="it.grupposcai.osamard" additivity="false">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="osamard-appender"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <logger name="org.springframework" additivity="false">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="osamard-appender"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <logger name="org.mybatis" additivity="false">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="osamard-appender"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <logger name="ldg.mybatis" additivity="false">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="osamard-appender"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <logger name="org.apache.commons.httpclient">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <logger name="httpclient.wire">
+        <level value="${log.Slf4j.level}"/>
+        <appender-ref ref="mailAppender"/>
+    </logger>
+    <root>
+        <priority value="${log.level}"/>
+        <!-- log all log entries on console -->
+        <appender-ref ref="osamard-appender"/>
+        <appender-ref ref="mailAppender"/>
+    </root>
+</log4j:configuration>

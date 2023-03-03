@@ -1,0 +1,150 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.grupposcai</groupId>
+        <artifactId>osamard</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>osamard-api</artifactId>
+    <packaging>war</packaging>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <target.environment>local</target.environment>
+                <rp.build.warname>osamard-api</rp.build.warname>
+            </properties>
+        </profile>
+        <profile>
+            <id>svil</id>
+            <properties>
+                <target.environment>svil</target.environment>
+                <rp.build.warname>osamard-api-svil</rp.build.warname>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <target.environment>prod</target.environment>
+                <rp.build.warname>osamard-api-prod</rp.build.warname>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <target.environment>docker</target.environment>
+                <rp.build.warname>osamard-api-docker</rp.build.warname>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>it.grupposcai</groupId>
+            <artifactId>osamard-be</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- MYSQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!-- JACKSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bitbucket.dollar</groupId>
+            <artifactId>dollar</artifactId>
+            <version>1.0-beta3</version>
+        </dependency>
+
+        <!-- Dependency Spring support for cache -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.8</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+
+        <!-- ================================ FILTER PROFILES ============================ -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <filters>
+            <filter>src/main/filters/${target.environment}.properties</filter>
+        </filters>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.2</version>
+                    <configuration>
+                        <warName>${rp.build.warname}</warName>
+                    </configuration>
+                </plugin>
+
+                <!-- === Set JDK Compiler Level === -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

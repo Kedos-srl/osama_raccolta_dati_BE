@@ -1,0 +1,24 @@
+version: "2"
+services:
+
+  database:
+    container_name: osamard-database
+    image: "mysql:8.0.25"
+    environment:
+      - MYSQL_DATABASE=root
+      - MYSQL_ROOT_PASSWORD=password
+      - TZ=Europe/Rome
+    command: --sql_mode="" --lower_case_table_names=1 </dump/dump_osamard_db.sql
+    volumes:
+      - ./dati/mysql/datadir/:/var/lib/mysql
+      - ./sql/dump/dump_osamard_db.sql:/dump/dump_osamard_db.sql
+    ports:
+      - 3311:3306
+  backend:
+    container_name: osamard-be
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 8011:8080
+    volumes:
+      - ./dati/be:/var
