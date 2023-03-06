@@ -4,6 +4,12 @@
 -- ------------------------------------------------------
 -- Server version	8.0.25
 
+drop database if exist `osama_raccolta_dati`;
+create database `osama_raccolta_dati`;
+use `osama_raccolta_dati`;
+SET FOREIGN_KEY_CHECKS=0;
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -647,3 +653,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-03-03 17:37:30
+
+SET FOREIGN_KEY_CHECKS=1;
