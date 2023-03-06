@@ -1,5 +1,4 @@
-drop database if exist `osama_raccolta_dati`;
-create database `osama_raccolta_dati`;
+create database if not exist `osama_raccolta_dati`;
 use `osama_raccolta_dati`;
 SET FOREIGN_KEY_CHECKS=0;
 

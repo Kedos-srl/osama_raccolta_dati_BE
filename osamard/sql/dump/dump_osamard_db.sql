@@ -1,11 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: osama_raccolta_dati
--- ------------------------------------------------------
--- Server version	8.0.25
-
-drop database if exist `osama_raccolta_dati`;
-create database `osama_raccolta_dati`;
+create database if not exist `osama_raccolta_dati`;
 use `osama_raccolta_dati`;
 SET FOREIGN_KEY_CHECKS=0;
 

@@ -106,14 +106,14 @@
 							"raw": "{\n\t\"token\":\"{{token}}\"\n}"
 						},
 						"url": {
-							"raw": "{{host}}/rest/utente/logout",
+							"raw": "{{host}}/rest/fornitore/getItemsForm",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"rest",
-								"utente",
-								"logout"
+								"fornitore",
+								"getItemsForm"
 							]
 						}
 					},
