@@ -2,10 +2,10 @@ package it.grupposcai.osamard.rest.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.grupposcai.osamard.dao.util.ObjectMapping;
-import it.grupposcai.osamard.util.CustomerJsonDateDeserializable;
+import it.grupposcai.osamard.util.deserializer.CustomerJsonLocalDateTimeDeserializable;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CommonAttributeRequest implements Serializable, ObjectMapping {
 
@@ -16,10 +16,10 @@ public class CommonAttributeRequest implements Serializable, ObjectMapping {
     private Boolean disabled;
     private Long firstUser;
     private Long lastUserModified;
-    @JsonDeserialize(using = CustomerJsonDateDeserializable.class)
-    private Date dtInserimento;
-    @JsonDeserialize(using = CustomerJsonDateDeserializable.class)
-    private Date dtModifica;
+    @JsonDeserialize(using = CustomerJsonLocalDateTimeDeserializable.class)
+    private LocalDateTime dtInserimento;
+    @JsonDeserialize(using = CustomerJsonLocalDateTimeDeserializable.class)
+    private LocalDateTime dtModifica;
 
     public String getToken() {
         return token;
@@ -61,19 +61,19 @@ public class CommonAttributeRequest implements Serializable, ObjectMapping {
         this.lastUserModified = lastUserModified;
     }
 
-    public Date getDtInserimento() {
+    public LocalDateTime getDtInserimento() {
         return dtInserimento;
     }
 
-    public void setDtInserimento(Date dtInserimento) {
+    public void setDtInserimento(LocalDateTime dtInserimento) {
         this.dtInserimento = dtInserimento;
     }
 
-    public Date getDtModifica() {
+    public LocalDateTime getDtModifica() {
         return dtModifica;
     }
 
-    public void setDtModifica(Date dtModifica) {
+    public void setDtModifica(LocalDateTime dtModifica) {
         this.dtModifica = dtModifica;
     }
 }

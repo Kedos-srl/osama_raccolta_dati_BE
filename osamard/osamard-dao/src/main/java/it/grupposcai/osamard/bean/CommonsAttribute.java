@@ -3,31 +3,31 @@ package it.grupposcai.osamard.bean;
 import it.grupposcai.osamard.dao.util.ObjectMapping;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CommonsAttribute implements Serializable, ObjectMapping {
 
     private static final long serialVersionUID = -4822617367801876161L;
 
-    private Date dt_inserimento;
-    private Date dt_modifica;
+    private LocalDateTime dt_inserimento;
+    private LocalDateTime dt_modifica;
     private Long first_user;
     private Long last_user_modified;
     private boolean disabled;
 
-    public Date getDt_inserimento() {
+    public LocalDateTime getDt_inserimento() {
         return dt_inserimento;
     }
 
-    public void setDt_inserimento(Date dt_inserimento) {
+    public void setDt_inserimento(LocalDateTime dt_inserimento) {
         this.dt_inserimento = dt_inserimento;
     }
 
-    public Date getDt_modifica() {
+    public LocalDateTime getDt_modifica() {
         return dt_modifica;
     }
 
-    public void setDt_modifica(Date dt_modifica) {
+    public void setDt_modifica(LocalDateTime dt_modifica) {
         this.dt_modifica = dt_modifica;
     }
 

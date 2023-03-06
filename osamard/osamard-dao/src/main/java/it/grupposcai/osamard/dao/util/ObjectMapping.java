@@ -2,9 +2,9 @@ package it.grupposcai.osamard.dao.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Interfaccia che riunisce i metodi toMap e fromMap per permettere ai tre livelli di oggetto (request, bean, response) di implementare l'interfaccia e centralizzare il controllo di questi metodi.
@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public interface ObjectMapping {
 
-    final static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     /**
      * Metodo gemello del metodo in CommonsUtils, messo in questa interfaccia per problemi di visibilità degli utils da questo punto del progetto
@@ -22,10 +22,10 @@ public interface ObjectMapping {
      * @param date
      * @return
      */
-    private static String convertDateInString(Date date) {
+    private static String convertDateInString(LocalDateTime date) {
         String dataStr = null;
         if (date != null) {
-            dataStr = dateFormat.format(date);
+            dataStr = date.format(formatter);
         }
         return dataStr;
     }
@@ -97,13 +97,10 @@ public interface ObjectMapping {
      * @param dataStr
      * @return
      */
-    private Date convertStringInDate(String dataStr) {
-        Date date = null;
+    private LocalDate convertStringInDate(String dataStr) {
+        LocalDate date = null;
         if (dataStr != null) {
-            try {
-                date = dateFormat.parse(dataStr);
-            } catch (ParseException e) {
-            }
+            date = LocalDate.parse(dataStr, formatter);
         }
         return date;
     }

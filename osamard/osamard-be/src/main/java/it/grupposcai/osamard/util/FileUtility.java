@@ -13,8 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class FileUtility {
@@ -115,13 +115,13 @@ public class FileUtility {
 
         String destinationFile = "";
 
-        String formatoTimestamp = "yyyyMMddHHmmss";
-        SimpleDateFormat sdfDataTimestamp = new SimpleDateFormat(formatoTimestamp);
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
         //String baseName = FilenameUtils.getBaseName(nomeFileOriginale);
         String estensioneFile = FilenameUtils.getExtension(nomeFileOriginale);
 
-        String nomeFile = sdfDataTimestamp.format(new Date()) + "." + estensioneFile;
+        String nomeFile = now.format(formatter) + "." + estensioneFile;
 
         /** Get folder out */
         String folderOutPath = getFullDocumentPath(basePathOut, generateHashPath(is));

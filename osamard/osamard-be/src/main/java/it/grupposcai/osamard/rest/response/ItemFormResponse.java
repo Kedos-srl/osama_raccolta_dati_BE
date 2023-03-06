@@ -1,6 +1,7 @@
 package it.grupposcai.osamard.rest.response;
 
 import it.grupposcai.osamard.bean.*;
+import it.grupposcai.osamard.bean.NameId;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,102 +10,94 @@ public class ItemFormResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Materiale> materiale;
-    private List<Dimensioni> dimensioni;
-    private List<Moq> moq;
-    private List<Campioni> campioni;
-    private List<Produzione> produzione;
-    private List<Trading> trading;
-    private List<CertificazioniFabbrica> certificazioniFabbrica;
-    private List<FornitoreCategoria> fornitoreCategoria;
-    private List<FornitoreSubcategoria> fornitoreSubcategoria;
-    private List<CertificazioniMateriali> certificazioniMateriali;
+    private List<NameIdResponse> materiale;
+    private List<NameIdResponse> dimensioni;
+    private List<NameIdResponse> moq;
+    private List<NameIdResponse> campioni;
+    private List<NameIdResponse> produzione;
+    private List<NameIdResponse> trading;
+    private List<NameIdResponse> certificazioniFabbrica;
+    private List<NameIdResponse> fornitoreCategoria;
+    private List<FornitoreSubcategoriaResponse> fornitoreSubcategoria;
+    private List<NameIdResponse> certificazioniMateriali;
 
-    public List<Materiale> getMateriale() {
+    public List<NameIdResponse> getMateriale() {
         return materiale;
     }
 
-    public void setMateriale(List<Materiale> materiale) {
+    public void setMateriale(List<NameIdResponse> materiale) {
         this.materiale = materiale;
     }
 
-    public List<Dimensioni> getDimensioni() {
+    public List<NameIdResponse> getDimensioni() {
         return dimensioni;
     }
 
-    public void setDimensioni(List<Dimensioni> dimensioni) {
+    public void setDimensioni(List<NameIdResponse> dimensioni) {
         this.dimensioni = dimensioni;
     }
 
-    public List<Moq> getMoq() {
+    public List<NameIdResponse> getMoq() {
         return moq;
     }
 
-    public void setMoq(List<Moq> moq) {
+    public void setMoq(List<NameIdResponse> moq) {
         this.moq = moq;
     }
 
-    public List<Campioni> getCampioni() {
+    public List<NameIdResponse> getCampioni() {
         return campioni;
     }
 
-    public void setCampioni(List<Campioni> campioni) {
+    public void setCampioni(List<NameIdResponse> campioni) {
         this.campioni = campioni;
     }
 
-    public List<Produzione> getProduzione() {
+    public List<NameIdResponse> getProduzione() {
         return produzione;
     }
 
-    public void setProduzione(List<Produzione> produzione) {
+    public void setProduzione(List<NameIdResponse> produzione) {
         this.produzione = produzione;
     }
 
-    public List<Trading> getTrading() {
+    public List<NameIdResponse> getTrading() {
         return trading;
     }
 
-    public void setTrading(List<Trading> trading) {
+    public void setTrading(List<NameIdResponse> trading) {
         this.trading = trading;
     }
 
-    public List<CertificazioniFabbrica> getCertificazioni() {
+    public List<NameIdResponse> getCertificazioniFabbrica() {
         return certificazioniFabbrica;
     }
 
-    public void setCertificazioni(List<CertificazioniFabbrica> certificazioniFabbrica) {
+    public void setCertificazioniFabbrica(List<NameIdResponse> certificazioniFabbrica) {
         this.certificazioniFabbrica = certificazioniFabbrica;
     }
 
-    public List<FornitoreCategoria> getFornitoreCategoria() {
+    public List<NameIdResponse> getFornitoreCategoria() {
         return fornitoreCategoria;
     }
 
-    public void setFornitoreCategoria(List<FornitoreCategoria> fornitoreCategoria) {
+    public void setFornitoreCategoria(List<NameIdResponse> fornitoreCategoria) {
         this.fornitoreCategoria = fornitoreCategoria;
     }
 
-    public List<FornitoreSubcategoria> getFornitoreSubcategoria() {
+    public List<FornitoreSubcategoriaResponse> getFornitoreSubcategoria() {
         return fornitoreSubcategoria;
     }
 
-    public void setFornitoreSubcategoria(List<FornitoreSubcategoria> fornitoreSubcategoria) {
+    public void setFornitoreSubcategoria(List<FornitoreSubcategoriaResponse> fornitoreSubcategoria) {
         this.fornitoreSubcategoria = fornitoreSubcategoria;
     }
 
-    public List<CertificazioniFabbrica> getCertificazioniFabbrica() {
-        return certificazioniFabbrica;
-    }
-
-    public void setCertificazioniFabbrica(List<CertificazioniFabbrica> certificazioniFabbrica) {
-        this.certificazioniFabbrica = certificazioniFabbrica;
-    }
-
-    public List<CertificazioniMateriali> getCertificazioniMateriali() {
+    public List<NameIdResponse> getCertificazioniMateriali() {
         return certificazioniMateriali;
     }
 
-    public void setCertificazioniMateriali(List<CertificazioniMateriali> certificazioniMateriali) {
+    public void setCertificazioniMateriali(List<NameIdResponse> certificazioniMateriali) {
         this.certificazioniMateriali = certificazioniMateriali;
     }
 }

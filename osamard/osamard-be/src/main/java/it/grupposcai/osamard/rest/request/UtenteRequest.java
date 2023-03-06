@@ -1,9 +1,10 @@
 package it.grupposcai.osamard.rest.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.grupposcai.osamard.util.CustomerJsonDateDeserializable;
+import it.grupposcai.osamard.util.deserializer.CustomerJsonLocalDateTimeDeserializable;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 public class UtenteRequest extends CommonAttributeRequest {
 
@@ -15,10 +16,10 @@ public class UtenteRequest extends CommonAttributeRequest {
     private String cognome;
     private String email;
     private String password;
-    @JsonDeserialize(using = CustomerJsonDateDeserializable.class)
-    private Date dtAttivazione;
-    @JsonDeserialize(using = CustomerJsonDateDeserializable.class)
-    private Date dtScadenza;
+    @JsonDeserialize(using = CustomerJsonLocalDateTimeDeserializable.class)
+    private LocalDateTime dtAttivazione;
+    @JsonDeserialize(using = CustomerJsonLocalDateTimeDeserializable.class)
+    private LocalDateTime dtScadenza;
 
     public Long getId() {
         return id;
@@ -68,19 +69,19 @@ public class UtenteRequest extends CommonAttributeRequest {
         this.password = password;
     }
 
-    public Date getDtAttivazione() {
+    public LocalDateTime getDtAttivazione() {
         return dtAttivazione;
     }
 
-    public void setDtAttivazione(Date dtAttivazione) {
+    public void setDtAttivazione(LocalDateTime dtAttivazione) {
         this.dtAttivazione = dtAttivazione;
     }
 
-    public Date getDtScadenza() {
+    public LocalDateTime getDtScadenza() {
         return dtScadenza;
     }
 
-    public void setDtScadenza(Date dtScadenza) {
+    public void setDtScadenza(LocalDateTime dtScadenza) {
         this.dtScadenza = dtScadenza;
     }
 }
