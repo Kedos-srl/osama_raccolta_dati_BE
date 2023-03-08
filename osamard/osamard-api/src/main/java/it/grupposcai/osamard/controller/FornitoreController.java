@@ -1,8 +1,11 @@
 package it.grupposcai.osamard.controller;
 
 import it.grupposcai.osamard.rest.request.CommonAttributeRequest;
+import it.grupposcai.osamard.rest.request.FornitoreRequest;
 import it.grupposcai.osamard.rest.request.SearchFornitoreRequest;
+import it.grupposcai.osamard.rest.response.FornitoreResponse;
 import it.grupposcai.osamard.rest.response.ItemFormResponse;
+import it.grupposcai.osamard.rest.response.WarningResponse;
 import it.grupposcai.osamard.service.FornitoreService;
 import it.grupposcai.osamard.service.UtenteService;
 import it.grupposcai.osamard.util.CommonsUtils;
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,102 +40,33 @@ public class FornitoreController extends AbstractController {
     @Autowired
     UtenteService utenteService;
 
-//    //- Inserimento / Modifica
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public @ResponseBody
-//    RESTResponse save(@RequestBody FornitoreRequest request) {
-//
-//        try {
-//            logger.debug("--- save fornitore ---  input request = \n " + JsonUtils.convertObjToJsonString(request));
-//            if (super.checkIfTokenIsValid(request.getToken())) {
-//
-//                Long idUser = super.getIdUserFromToken(request.getToken());
-//
-//                request.setFirstUser(idUser);
-//                request.setLastUserModified(idUser);
-//
-//                if (utenteService.isAutorizzato(idUser, Const.TipoServizio.MODIFY)) {
-//
-//                    FornitoreResponse response = new FornitoreResponse();
-//
-//                    String msg = "";
-//
-//                    //fornitore
-//                    logger.debug("--- fornitore ---");
-//                    Fornitore fornitore = ConversionRequestUtils.convertRequestInFornitore(request);
-//
-//                    List<FornitoreMultilingua> linguaList = null;
-//
-//                    if (request != null && request.getElencoMultilingua() != null && request.getElencoMultilingua().size() > 0) {
-//                        linguaList = ConversionRequestUtils.convertRequestInFornitoreMultilingua(request.getElencoMultilingua(), request.getLanguage(), fornitore);
-//                    }
-//
-//                    Fornitore fornitoreSaved = null;
-//                    if (request.getIdFornitore() != null && request.getIdFornitore() > 0) {
-//                        fornitoreSaved = fornitoreService.update(fornitore);
-//                        msg = Const.MODIFICA_OK;
-//                    } else {
-//                        fornitoreSaved = fornitoreService.insert(fornitore);
-//                        msg = Const.INSERT_OK;
-//                    }
-//
-//
-//                    List<FornitoreMultilingua> fornitoreLinguaList = null;
-//                    if (fornitoreSaved != null) {
-//                        fornitoreLinguaList = fornitoreService.selectAllByIdFornitore(fornitoreSaved.getId());
-//                    }
-//
-//                    response = ConversionResponseUtils.convertFornitoretoFornitoreResponse(fornitoreSaved, fornitoreLinguaList);
-//
-//
-//                    FornitoreCategoria categoriaFornitore = new FornitoreCategoria();
-//                    categoriaFornitore.setId(fornitoreSaved.getId());
-//                    categoriaFornitore = fornitoreCategoriaService.selectById(categoriaFornitore);
-//
-//                    if (categoriaFornitore != null) {
-//                        response.setIdCategoria(categoriaFornitore.getId());
-//                        FornitoreCategoriaMultilingua fornitoreCategoriaMultilingua = fornitoreCategoriaService.selectByIdAndLanguage(categoriaFornitore.getId(), "IT");
-//                        response.setDescCategoria(fornitoreCategoriaMultilingua.getTitolo());
-//                    }
-//
-//                    FornitoreSubcategoria fornitoreSubcategoria = new FornitoreSubcategoria();
-//                    fornitoreSubcategoria.setId_subcategoria(fornitoreSaved.getId_subcategoria());
-//                    fornitoreSubcategoria = fornitoreSubcategoriaService.selectById(fornitoreSubcategoria);
-//
-//                    if (fornitoreSubcategoria != null) {
-//                        response.setIdSubcategoria(fornitoreSubcategoria.getId_subcategoria());
-//                        FornitoreSubcategoriaMultilingua fornitoreSubcategoriaMultilingua = fornitoreSubcategoriaService.selectByIdAndLanguage(fornitoreSubcategoria.getId_subcategoria(), "IT");
-//                        response.setDescSubcategoria(fornitoreSubcategoriaMultilingua.getTitolo());
-//                    }
-//
-//                    List<FornitoreMultilinguaResponse> multilingua = response.getElencoMultilingua();
-//
-//                    if (multilingua != null) {
-//                        for (FornitoreMultilinguaResponse lingua : multilingua) {
-//                            if (lingua.getDescrizione() != null) {
-//                                //niente
-//                            } else {
-//                                lingua.setDisabled(true);
-//                            }
-//                        }
-//
-//                    }
-//
-//
-//                    return new RESTResponse(HttpStatus.OK.name(), response, super.getMessageFromSource(msg, request.getLanguage()));
-//                } else {
-//                    return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.UNAUTHORIZED, request.getLanguage()));
-//                }
-//            } else {
-//                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION, request.getLanguage()));
-//            }
-//
-//        } catch (Exception e) {
-//            return CommonsUtils.printAndReturnError(logger, "save", e);
-//        }
-//
-//    }
-//
+    // Inserimento / Modifica
+    @PostMapping(value = "/save")
+    public @ResponseBody
+    RESTResponse save(@RequestBody FornitoreRequest request) {
+
+        try {
+            logger.debug("--- save --- input request = \n " + JsonUtils.convertObjToJsonString(request));
+            if (!super.checkIfTokenIsValid(request.getToken())) {
+                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION));
+            }
+
+            request.setFirstUser(getIdUserFromToken(request.getToken()));
+            request.setLastUserModified(getIdUserFromToken(request.getToken()));
+
+            List<WarningResponse> warnings = checkInputFornitoreSave(request);
+            if (warnings.size() > 0) {
+                return new RESTResponse(Const.ESITO_KO, warnings, super.getMessageFromSource(Const.MISSING_DATA));
+            }
+
+            FornitoreResponse resp = fornitoreService.save(request);
+
+            return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.INSERT_OK));
+        } catch (Exception e) {
+            return CommonsUtils.printAndReturnError(logger, "logout", e);
+        }
+    }
+
 //
 //    // getById
 //    @RequestMapping(value = "/getById", method = RequestMethod.POST)
@@ -321,7 +257,7 @@ public class FornitoreController extends AbstractController {
 
             ItemFormResponse resp = fornitoreService.getItemsForm();
 
-            return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.DATA_FOUND));
+            return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.REQUEST_SUCCESS));
         } catch (Exception e) {
             return CommonsUtils.printAndReturnError(logger, "logout", e);
         }
@@ -377,6 +313,23 @@ public class FornitoreController extends AbstractController {
         }
 
         return params;
+    }
+
+
+    private List<WarningResponse> checkInputFornitoreSave(FornitoreRequest request) {
+        List<WarningResponse> warningResponses = new ArrayList<>();
+
+        //TODO ZAMMA Aggiungere campi obbligatori
+
+//        if (request.getEmail() == null || request.getEmail().equals("")) {
+//            WarningResponse warningResponse = new WarningResponse("EMAIL", super.getMessageFromSource("required.field"));
+//            warningResponses.add(warningResponse);
+//        }
+//        if (request.getPassword() == null || request.getPassword().equals("")) {
+//            WarningResponse warningResponse = new WarningResponse("PASSWORD", super.getMessageFromSource("required.field"));
+//            warningResponses.add(warningResponse);
+//        }
+        return warningResponses;
     }
 
 }

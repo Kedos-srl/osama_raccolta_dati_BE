@@ -64,6 +64,17 @@
 								"name": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:4200",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -114,6 +125,36 @@
 								"rest",
 								"fornitore",
 								"getItemsForm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{token}}\",\n    \"id\": null,\n    \"ragioneSociale\": \"Rag soc test1\",\n    \"tempoMercato\": \"un tempo\",\n    \"idCategoria\": null,\n    \"idSubcategoria\": null,\n    \"fatTot\": \"100€\",\n    \"fatIt\": \"100€\",\n    \"numeroDipendenti\": 50,\n    \"rdInterno\": false,\n    \"idTrading\": 1,\n    \"contatto\": {\n        \"id\": null,\n        \"nome\": \"Turi sghei\",\n        \"posizione\": \"Vendite\"\n    },\n    \"prodottoList\": [\n        {\n            \"id\": null,\n            \"codArticolo\": \"cod Articolo 1\",\n            \"idMateriale\": null,\n            \"idDimensioni\": null,\n            \"idMoq\": 1,\n            \"idPrezzo\": null,\n            \"idFornitore\": null,\n            \"fotoList\": null\n        }\n    ],\n    \"fotoList\": null\n}"
+						},
+						"url": {
+							"raw": "{{host}}/rest/fornitore/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"rest",
+								"fornitore",
+								"save"
 							]
 						}
 					},

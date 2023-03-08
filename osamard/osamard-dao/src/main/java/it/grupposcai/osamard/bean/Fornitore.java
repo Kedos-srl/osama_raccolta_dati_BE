@@ -14,7 +14,7 @@ public class Fornitore extends CommonsAttribute {
     private String fat_it;
     private Long numero_dipendenti;
     private Boolean rd_interno;
-    private Long id_traning;
+    private Long id_trading;
     private Long id_contatto;
 
     public Long getId() {
@@ -89,12 +89,12 @@ public class Fornitore extends CommonsAttribute {
         this.rd_interno = rd_interno;
     }
 
-    public Long getId_traning() {
-        return id_traning;
+    public Long getId_trading() {
+        return id_trading;
     }
 
-    public void setId_traning(Long id_traning) {
-        this.id_traning = id_traning;
+    public void setId_trading(Long id_trading) {
+        this.id_trading = id_trading;
     }
 
     public Long getId_contatto() {

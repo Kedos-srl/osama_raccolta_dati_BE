@@ -26,8 +26,8 @@ public final class Const {
     public static final String DEFAULT_LANGUAGE = "IT";
 
     public static class Oggetto {
-        public static final Map<Long, String> PRODOTTO = Map.of(1l, "PRODOTTO");
-        public static final Map<Long, String> FORNITORE = Map.of(2l, "FORNITORE");
+        public static final Long PRODOTTO = 1l;
+        public static final Long FORNITORE = 2l;
     }
 
 }

@@ -139,6 +139,27 @@
                   value="it.grupposcai.osamard.dao.TradingDao"/>
     </bean>
 
+    <bean id="ContattoDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.ContattoDao"/>
+    </bean>
+
+    <bean id="FotoDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.FotoDao"/>
+    </bean>
+
+    <bean id="ProdottoDao"
+          class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface"
+                  value="it.grupposcai.osamard.dao.ProdottoDao"/>
+    </bean>
+
 </beans>
 
 

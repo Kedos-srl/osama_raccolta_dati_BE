@@ -11,6 +11,7 @@ public class Prodotto extends CommonsAttribute {
     private Long id_dimensioni;
     private Long id_moq;
     private Long id_prezzo;
+    private Long id_fornitore;
 
     public Long getId() {
         return id;
@@ -58,5 +59,13 @@ public class Prodotto extends CommonsAttribute {
 
     public void setId_prezzo(Long id_prezzo) {
         this.id_prezzo = id_prezzo;
+    }
+
+    public Long getId_fornitore() {
+        return id_fornitore;
+    }
+
+    public void setId_fornitore(Long id_fornitore) {
+        this.id_fornitore = id_fornitore;
     }
 }

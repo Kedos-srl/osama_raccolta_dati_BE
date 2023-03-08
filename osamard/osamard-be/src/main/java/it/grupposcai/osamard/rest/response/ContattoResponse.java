@@ -1,17 +1,12 @@
 package it.grupposcai.osamard.rest.response;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import it.grupposcai.osamard.util.serializer.CustomerJsonLocalDateTimeSerializable;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-public class NameIdResponse extends CommonAttributeResponse implements Serializable {
+public class ContattoResponse extends CommonAttributeResponse {
 
     private static final long serialVersionUID = -4822617367801876161L;
 
     private Long id;
     private String name;
+    private String posizione;
 
     public Long getId() {
         return id;
@@ -29,4 +24,11 @@ public class NameIdResponse extends CommonAttributeResponse implements Serializa
         this.name = name;
     }
 
+    public String getPosizione() {
+        return posizione;
+    }
+
+    public void setPosizione(String posizione) {
+        this.posizione = posizione;
+    }
 }

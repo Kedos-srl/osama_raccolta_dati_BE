@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface FornitoreDao {
     @Insert("insert into fornitore "
-            + " (nome, cognome, email, password,  id_profilo,  dt_attivazione, dt_scadenza, disabled, last_user_modified, first_user)"
+            + " (ragione_sociale, tempo_mercato, id_categoria, id_subcategoria,  fat_tot, fat_it, numero_dipendenti, rd_interno, id_trading, id_contatto, disabled, last_user_modified, first_user)"
             + " values "
-            + " (#{nome}, #{cognome}, #{email}, #{password}, #{id_profilo}, #{dt_attivazione}, #{dt_scadenza}, #{disabled}, #{last_user_modified}, #{first_user}) ")
-    @Options(useGeneratedKeys = true, keyProperty = "id_fornitore")
+            + " (#{ragione_sociale}, #{tempo_mercato}, #{id_categoria}, #{id_subcategoria}, #{fat_tot}, #{fat_it}, #{numero_dipendenti}, #{rd_interno}, #{id_trading}, #{id_contatto}, #{disabled}, #{last_user_modified}, #{first_user}) ")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(Fornitore fornitore);
 
     @Select("select * from fornitore where id_fornitore = #{id_fornitore}")
