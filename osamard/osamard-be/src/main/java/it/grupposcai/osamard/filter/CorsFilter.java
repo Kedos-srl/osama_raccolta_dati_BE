@@ -18,9 +18,9 @@ public class CorsFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
         response.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
         response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Max-Age", "86400");
 
         if (request.getMethod().equals("OPTIONS")) {
-            response.addHeader("Access-Control-Max-Age", "86400");
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
@@ -29,4 +29,25 @@ public class CorsFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+	/*
+    public void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse servletResponse, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+        // Authorize (allow) all domains to consume the content
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Max-Age", "86400");
+
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
+        if (request.getMethod().equals("OPTIONS")) {
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            return;
+        }
+        // pass the request along the filter chain
+        chain.doFilter(request, servletResponse);
+    }
+    */
 }

@@ -1,0 +1,1 @@
+INSERT INTO osama_raccolta_dati.dbo.utente (id,username,nome,cognome,email,password,DISABLED,DT_INSERIMENTO,DT_MODIFICA,LAST_USER_MODIFIED,FIRST_USER) VALUES (1,N'ANdreaTest',N'Andrea',N'Zamma',N'andrea.zammataro@kedos-srl.it',N'{SHA}a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',0,'2023-03-02 16:52:06.0','2023-03-02 16:52:06.0',1,1);

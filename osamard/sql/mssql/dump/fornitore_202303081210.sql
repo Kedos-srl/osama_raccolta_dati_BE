@@ -1,0 +1,1 @@
+INSERT INTO osama_raccolta_dati.dbo.fornitore (id,ragione_sociale,tempo_mercato,id_categoria,id_subcategoria,fat_tot,fat_it,numero_dipendenti,rd_interno,id_trading,id_contatto,DISABLED,DT_INSERIMENTO,DT_MODIFICA,LAST_USER_MODIFIED,FIRST_USER) VALUES (1,N'Rag soc test1',N'un tempo',NULL,NULL,N'100€',N'100€',50,0,NULL,1,0,'2023-03-08 10:41:42.883','2023-03-08 10:41:42.883',1,1);

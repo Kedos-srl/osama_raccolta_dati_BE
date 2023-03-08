@@ -1,0 +1,1 @@
+INSERT INTO osama_raccolta_dati.dbo.contatto (id,nome,posizione,DISABLED,DT_INSERIMENTO,DT_MODIFICA,LAST_USER_MODIFIED,FIRST_USER) VALUES (1,N'Turi sghei',N'Vendite',0,'2023-03-08 11:41:42.66','2023-03-08 11:41:42.66',1,1);
