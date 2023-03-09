@@ -14,8 +14,8 @@ public interface FornitoreDao {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(Fornitore fornitore);
 
-    @Select("select * from fornitore where id_fornitore = #{id_fornitore}")
-    public Fornitore getById(@Param("id_fornitore") Long id_fornitore);
+    @Select("select * from fornitore where id = #{id}")
+    public Fornitore getById(@Param("id") Long id);
 
     @Update("update fornitore set nome =  #{nome}, cognome = #{cognome}, id_profilo = #{id_profilo}, disabled = #{disabled}, last_user_modified = #{last_user_modified}  where id_fornitore = #{id_fornitore}")
     public void update(Fornitore fornitore);

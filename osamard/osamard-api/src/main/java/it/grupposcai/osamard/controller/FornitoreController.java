@@ -67,85 +67,33 @@ public class FornitoreController extends AbstractController {
         }
     }
 
-//
-//    // getById
-//    @RequestMapping(value = "/getById", method = RequestMethod.POST)
-//    public @ResponseBody
-//    RESTResponse getById(@RequestBody FornitoreRequest request) {
-//
-//        try {
-//            logger.debug("--- getById ---  input request = \n " + JsonUtils.convertObjToJsonString(request));
-//            if (super.checkIfTokenIsValid(request.getToken())) {
-//
-//                Long idUser = super.getIdUserFromToken(request.getToken());
-//
-//                if (utenteService.isAutorizzato(idUser, Const.TipoServizio.MODIFY)) {
-//
-//                    FornitoreResponse response = new FornitoreResponse();
-//
-//                    Fornitore fornitore = new Fornitore();
-//                    fornitore.setId(request.getIdFornitore());
-//                    fornitore = fornitoreService.selectById(fornitore);
-//
-//                    if (fornitore != null) {
-//
-//                        FornitoreSubcategoria subcategoria = new FornitoreSubcategoria();
-//                        subcategoria.setId_subcategoria(fornitore.getId_subcategoria());
-//                        subcategoria = fornitoreSubcategoriaService.selectById(subcategoria);
-//
-//                        FornitoreCategoria categoria = new FornitoreCategoria();
-//                        categoria.setId(fornitore.getId());
-//                        categoria = fornitoreCategoriaService.selectById(categoria);
-//
-//                        List<FornitoreMultilingua> zonaLinguaList = null;
-//
-//                        zonaLinguaList = fornitoreService.selectAllByIdFornitore(fornitore.getId());
-//                        response = ConversionResponseUtils.convertFornitoretoFornitoreResponse(fornitore, zonaLinguaList);
-//
-//
-//                    } else {
-//
-//                        List<FornitoreMultilinguaResponse> elencoMultilingua = new ArrayList<FornitoreMultilinguaResponse>();
-//                        List<Lingua> lingueAbilitate = linguaService.getAllEnabledBackoffice();
-//
-//                        for (Lingua lingua : lingueAbilitate) {
-//                            FornitoreMultilinguaResponse ssmr = new FornitoreMultilinguaResponse();
-//                            ssmr.setCdLingua(lingua.getCd_lingua());
-//                            ssmr.setLinguaDefault(lingua.isFlg_default());
-//
-//                            if (ssmr.getDescrizione() != null) {
-//                                //niente
-//                            } else {
-//                                if (lingua.isFlg_default()) {
-//                                    ssmr.setDisabled(false);
-//                                } else {
-//                                    ssmr.setDisabled(true);
-//                                }
-//                            }
-//
-//                            elencoMultilingua.add(ssmr);
-//                        }
-//
-//                        response = new FornitoreResponse();
-//                        response.setElencoMultilingua(elencoMultilingua);
-//
-//                    }
-//
-//                    return new RESTResponse(HttpStatus.OK.name(), response, super.getMessageFromSource(Const.SEARCH_SUCCESS, request.getLanguage()));
-//                } else {
-//                    return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.UNAUTHORIZED, request.getLanguage()));
-//                }
-//
-//            } else {
-//                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION, request.getLanguage()));
-//            }
-//
-//        } catch (Exception e) {
-//            return CommonsUtils.printAndReturnError(logger, "getById", e);
-//        }
-//
-//    }
-//
+
+    // getById
+    @PostMapping(value = "/getById")
+    public @ResponseBody
+    RESTResponse getById(@RequestBody FornitoreRequest request) {
+
+        try {
+            logger.debug("--- getById ---  input request = \n " + JsonUtils.convertObjToJsonString(request));
+            if (!super.checkIfTokenIsValid(request.getToken())) {
+                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION));
+            }
+
+            List<WarningResponse> warnings = checkInputFornitoreGetById(request);
+            if (warnings.size() > 0) {
+                return new RESTResponse(Const.ESITO_KO, warnings, super.getMessageFromSource(Const.MISSING_DATA));
+            }
+
+            FornitoreResponse resp = fornitoreService.getById(request);
+
+            return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.SEARCH_SUCCESS));
+        } catch (RuntimeException e) {
+            return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.NO_DATA_FOUND));
+        } catch (Exception e) {
+            return CommonsUtils.printAndReturnError(logger, "logout", e);
+        }
+    }
+
 //
 //    @RequestMapping(value = "/searchFornitori", method = RequestMethod.POST)
 //    public @ResponseBody
@@ -329,6 +277,17 @@ public class FornitoreController extends AbstractController {
 //            WarningResponse warningResponse = new WarningResponse("PASSWORD", super.getMessageFromSource("required.field"));
 //            warningResponses.add(warningResponse);
 //        }
+        return warningResponses;
+    }
+
+    private List<WarningResponse> checkInputFornitoreGetById(FornitoreRequest request) {
+        List<WarningResponse> warningResponses = new ArrayList<>();
+
+        if (request.getId() == null || request.getId().equals("")) {
+            WarningResponse warningResponse = new WarningResponse("id", super.getMessageFromSource("required.field"));
+            warningResponses.add(warningResponse);
+        }
+
         return warningResponses;
     }
 

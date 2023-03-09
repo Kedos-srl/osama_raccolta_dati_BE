@@ -19,4 +19,5 @@ public interface FornitoreService {
 
     FornitoreResponse save(FornitoreRequest request);
 
+    FornitoreResponse getById(FornitoreRequest request);
 }

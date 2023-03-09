@@ -159,6 +159,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{token}}\",\n    \"id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/rest/fornitore/getById",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"rest",
+								"fornitore",
+								"getById"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

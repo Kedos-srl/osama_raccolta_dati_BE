@@ -251,6 +251,15 @@ public class FornitoreServiceImpl implements FornitoreService {
 
     }
 
+    @Override
+    public FornitoreResponse getById(FornitoreRequest request) {
+        Fornitore fornitore = fornitoreDao.getById(request.getId());
+        if (fornitore == null) {
+            throw new RuntimeException("Fornitore non trovato");
+        }
+        return fornitoreToFornitoreResponse(fornitore);
+    }
+
     private FornitoreResponse fornitoreToFornitoreResponse(Fornitore fornitore) {
         FornitoreResponse response = new FornitoreResponse();
 
