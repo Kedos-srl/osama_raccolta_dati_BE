@@ -24,7 +24,7 @@ public class FotoServiceImpl implements FotoService {
     @Autowired
     FotoDao fotoDao;
 
-    @Value("file.path.external")
+    @Value("${file.path.external}")
     String filePathExternal;
 
 
@@ -40,6 +40,7 @@ public class FotoServiceImpl implements FotoService {
         pathFile = destinationPathAbsolute.replace(filePathExternal.trim(), "");
         pathFile = pathFile.replace("\\", "/");
         request.setPathFile(pathFile);
+        foto.setPath_file(pathFile);
 
         fotoDao.insert(foto);
         return foto;

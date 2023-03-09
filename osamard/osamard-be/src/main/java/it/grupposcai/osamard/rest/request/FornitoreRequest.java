@@ -9,8 +9,7 @@ public class FornitoreRequest extends CommonAttributeRequest {
     private Long id;
     private String ragioneSociale;
     private String tempoMercato;
-    private Long idCategoria;
-    private Long idSubcategoria;
+    private List<FornitoreCategoriaRequest> fornitoreCategoria;
     private String fatTot;
     private String fatIt;
     private Long numeroDipendenti;
@@ -19,6 +18,9 @@ public class FornitoreRequest extends CommonAttributeRequest {
     private ContattoRequest contatto;
     private List<ProdottoRequest> prodottoList;
     private List<FotoRequest> fotoList;
+    private FornitoreGeolocalizzazioneRequest fornitoreGeolocalizzazione;
+    private List<Long> idCertificatiFabbricaList;
+    private List<Long> idCertificatiMaterialiList;
 
     public Long getId() {
         return id;
@@ -42,22 +44,6 @@ public class FornitoreRequest extends CommonAttributeRequest {
 
     public void setTempoMercato(String tempoMercato) {
         this.tempoMercato = tempoMercato;
-    }
-
-    public Long getIdCategoria() {
-        return idCategoria;
-    }
-
-    public void setIdCategoria(Long idCategoria) {
-        this.idCategoria = idCategoria;
-    }
-
-    public Long getIdSubcategoria() {
-        return idSubcategoria;
-    }
-
-    public void setIdSubcategoria(Long idSubcategoria) {
-        this.idSubcategoria = idSubcategoria;
     }
 
     public String getFatTot() {
@@ -122,5 +108,33 @@ public class FornitoreRequest extends CommonAttributeRequest {
 
     public void setFotoList(List<FotoRequest> fotoList) {
         this.fotoList = fotoList;
+    }
+
+    public FornitoreGeolocalizzazioneRequest getFornitoreGeolocalizzazione() {
+        return fornitoreGeolocalizzazione;
+    }
+
+    public void setFornitoreGeolocalizzazione(FornitoreGeolocalizzazioneRequest fornitoreGeolocalizzazione) {
+        this.fornitoreGeolocalizzazione = fornitoreGeolocalizzazione;
+    }
+
+    public List<Long> getIdCertificatiFabbricaList() {
+        return idCertificatiFabbricaList;
+    }
+
+    public void setIdCertificatiFabbricaList(List<Long> idCertificatiFabbricaList) {
+        this.idCertificatiFabbricaList = idCertificatiFabbricaList;
+    }
+
+    public List<Long> getIdCertificatiMaterialiList() {
+        return idCertificatiMaterialiList;
+    }
+
+    public void setIdCertificatiMaterialiList(List<Long> idCertificatiMaterialiList) {
+        this.idCertificatiMaterialiList = idCertificatiMaterialiList;
+    }
+
+    public List<FornitoreCategoriaRequest> getFornitoreCategoria() {
+        return fornitoreCategoria;
     }
 }

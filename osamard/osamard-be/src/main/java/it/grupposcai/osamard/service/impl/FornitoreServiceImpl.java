@@ -26,25 +26,15 @@ public class FornitoreServiceImpl implements FornitoreService {
     @Autowired
     FornitoreDao fornitoreDao;
     @Autowired
-    MaterialeDao materialeDao;
-    @Autowired
-    DimensioniDao dimensioniDao;
-    @Autowired
-    MoqDao moqDao;
-    @Autowired
     CampioniDao campioniDao;
     @Autowired
     ProduzioneDao produzioneDao;
     @Autowired
-    TradingDao tradingDao;
+    MoqService moqService;
     @Autowired
-    CertificazioniFabbricaDao certificazioniFabbricaDao;
+    DimensioniService dimensioniService;
     @Autowired
-    FornitoreCategoriaDao fornitoreCategoriaDao;
-    @Autowired
-    FornitoreSubcategoriaDao fornitoreSubcategoriaDao;
-    @Autowired
-    CertificazioniMaterialiDao certificazioniMaterialiDao;
+    MaterialeService materialeService;
     @Autowired
     FornitoreCategoriaService fornitoreCategoriaService;
     @Autowired
@@ -57,12 +47,18 @@ public class FornitoreServiceImpl implements FornitoreService {
     ProdottoService prodottoService;
     @Autowired
     FotoService fotoService;
+    @Autowired
+    FornitoreGeolocalizzazioneService fornitoreGeolocalizzazioneService;
+    @Autowired
+    CertificazioniFabbricaService certificazioniFabbricaService;
+    @Autowired
+    CertificazioniMaterialiService certificazioniMaterialiService;
 
-    @Transactional
+
     private Fornitore insert(FornitoreRequest request) {
 
         // Salvo il contatto
-        if (request.getContatto() != null){
+        if (request.getContatto() != null) {
             request.getContatto().setDisabled(false);
             request.getContatto().setDtInserimento(LocalDateTime.now());
             request.getContatto().setDtModifica(LocalDateTime.now());
@@ -74,16 +70,6 @@ public class FornitoreServiceImpl implements FornitoreService {
         Fornitore fornitore = new Fornitore();
         fornitore.setRagione_sociale(request.getRagioneSociale());
         fornitore.setTempo_mercato(request.getTempoMercato());
-        FornitoreCategoria fornitoreCategoria = fornitoreCategoriaService.selectById(request.getIdCategoria());
-        if (fornitoreCategoria != null){
-            fornitore.setId_categoria(fornitoreCategoria.getId());
-        }
-
-        FornitoreSubcategoria fornitoreSubcategoria = fornitoreSubcategoriaService.selectById(request.getIdSubcategoria());
-        if (fornitoreSubcategoria != null){
-            fornitore.setId_subcategoria(fornitoreSubcategoria.getId());
-        }
-
         fornitore.setFat_tot(request.getFatTot());
         fornitore.setFat_it(request.getFatIt());
         fornitore.setNumero_dipendenti(request.getNumeroDipendenti());
@@ -91,7 +77,7 @@ public class FornitoreServiceImpl implements FornitoreService {
         fornitore.setId_contatto(contatto.getId());
 
         Trading trading = tradingService.selectById(request.getIdTrading());
-        if (trading != null){
+        if (trading != null) {
             fornitore.setId_trading(trading.getId());
         }
 
@@ -101,9 +87,70 @@ public class FornitoreServiceImpl implements FornitoreService {
         fornitore.setLast_user_modified(request.getLastUserModified());
         fornitore.setFirst_user(request.getFirstUser());
 
-        //TODO SALVARE CERTIFICATI
-
         fornitoreDao.insert(fornitore);
+
+        // Salvo le categorie
+        if (request.getFornitoreCategoria() != null && !request.getFornitoreCategoria().isEmpty()) {
+            request.getFornitoreCategoria().forEach(categoria -> {
+                if (categoria.getIdCategoria() == null) {
+                    return;
+                }
+                FornitoreCategoria fornitoreCategoria = fornitoreCategoriaService.selectById(categoria.getIdCategoria());
+                if (fornitoreCategoria == null) {
+                    return;
+                }
+
+                FornitoreCategoriaSubcategoria fornitoreCategoriaSubcategoria = new FornitoreCategoriaSubcategoria();
+                fornitoreCategoriaSubcategoria.setId_categoria(fornitoreCategoria.getId());
+                fornitoreCategoriaSubcategoria.setId_fornitore(fornitore.getId());
+
+                if (categoria.getIdSubcategoriaList() != null && !categoria.getIdSubcategoriaList().isEmpty()) {
+                    categoria.getIdSubcategoriaList().forEach(idSubcategoria -> {
+                        FornitoreSubcategoria fornitoreSubcategoria = fornitoreSubcategoriaService.selectById(idSubcategoria);
+                        if (fornitoreSubcategoria != null) {
+                            FornitoreCategoriaSubcategoria fornitoreCategoriaSubcategoria2 = new FornitoreCategoriaSubcategoria();
+                            fornitoreCategoriaSubcategoria2.setId_fornitore(fornitore.getId());
+                            fornitoreCategoriaSubcategoria2.setId_categoria(fornitoreCategoria.getId());
+                            fornitoreCategoriaSubcategoria2.setId_subcategoria(fornitoreSubcategoria.getId());
+                            fornitoreDao.insertFornitoreCategoriaSubcategoria(fornitoreCategoriaSubcategoria2);
+                        }
+                    });
+                    return;
+                }
+                fornitoreDao.insertFornitoreCategoriaSubcategoria(fornitoreCategoriaSubcategoria);
+            });
+        }
+
+        // Salvo le certificazioni
+        if (request.getIdCertificatiFabbricaList() != null && !request.getIdCertificatiFabbricaList().isEmpty()) {
+            request.getIdCertificatiFabbricaList().forEach(idCertificazione -> {
+                if (idCertificazione == null){
+                    return;
+                }
+                CertificazioniFabbrica certificazioniFabbrica =  certificazioniFabbricaService.selectById(idCertificazione);
+                if (certificazioniFabbrica != null) {
+                    FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
+                    fornitoreCertificazione.setId_fornitore(fornitore.getId());
+                    fornitoreCertificazione.setId_certificazione(certificazioniFabbrica.getId());
+                    certificazioniFabbricaService.insertCertificazioniFabbrica(fornitoreCertificazione);
+                }
+            });
+        }
+
+        if (request.getIdCertificatiMaterialiList() != null && !request.getIdCertificatiMaterialiList().isEmpty()) {
+            request.getIdCertificatiMaterialiList().forEach(idCertificazione -> {
+                if (idCertificazione == null){
+                    return;
+                }
+                CertificazioniMateriali certificazioniMateriali =  certificazioniMaterialiService.selectById(idCertificazione);
+                if (certificazioniMateriali != null) {
+                    FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
+                    fornitoreCertificazione.setId_fornitore(fornitore.getId());
+                    fornitoreCertificazione.setId_certificazione(certificazioniMateriali.getId());
+                    certificazioniMaterialiService.insertCertificazioniMateriali(fornitoreCertificazione);
+                }
+            });
+        }
 
         if (request.getProdottoList() != null && !request.getProdottoList().isEmpty()) {
             request.getProdottoList().forEach(prodottoRequest -> {
@@ -121,6 +168,7 @@ public class FornitoreServiceImpl implements FornitoreService {
         if (request.getFotoList() != null && !request.getFotoList().isEmpty()) {
             request.getFotoList().forEach(fotoRequest -> {
                 fotoRequest.setIdOggetto(fornitore.getId());
+                fotoRequest.setIdTipoOggetto(Const.Oggetto.FORNITORE);
                 fotoRequest.setDisabled(request.getDisabled() == null ? false : request.getDisabled());
                 fotoRequest.setDtInserimento(LocalDateTime.now());
                 fotoRequest.setDtModifica(LocalDateTime.now());
@@ -132,6 +180,18 @@ public class FornitoreServiceImpl implements FornitoreService {
                     logger.error("insert prodotto - Errore caricamento foto", e);
                 }
             });
+        }
+
+        // forniotre geolocalizzazione
+
+        if (request.getFornitoreGeolocalizzazione() != null) {
+            request.getFornitoreGeolocalizzazione().setIdFornitore(fornitore.getId());
+            request.getFornitoreGeolocalizzazione().setDisabled(request.getDisabled() == null ? false : request.getDisabled());
+            request.getFornitoreGeolocalizzazione().setDtInserimento(LocalDateTime.now());
+            request.getFornitoreGeolocalizzazione().setDtModifica(LocalDateTime.now());
+            request.getFornitoreGeolocalizzazione().setFirstUser(request.getFirstUser());
+            request.getFornitoreGeolocalizzazione().setLastUserModified(request.getLastUserModified());
+            fornitoreGeolocalizzazioneService.insert(request.getFornitoreGeolocalizzazione());
         }
 
         return fornitore;
@@ -160,27 +220,28 @@ public class FornitoreServiceImpl implements FornitoreService {
     @Override
     public ItemFormResponse getItemsForm() {
         ItemFormResponse response = new ItemFormResponse();
-        response.setMateriale(nameIdToNameIdResponse(materialeDao.getAll()));
-        response.setDimensioni(nameIdToNameIdResponse(dimensioniDao.getAll()));
-        response.setMoq(nameIdToNameIdResponse(moqDao.getAll()));
+        response.setMateriale(nameIdToNameIdResponse(materialeService.selectAll()));
+        response.setDimensioni(nameIdToNameIdResponse(dimensioniService.selectAll()));
+        response.setMoq(nameIdToNameIdResponse(moqService.selectAll()));
         response.setCampioni(nameIdToNameIdResponse(campioniDao.getAll()));
         response.setProduzione(nameIdToNameIdResponse(produzioneDao.getAll()));
-        response.setTrading(nameIdToNameIdResponse(tradingDao.getAll()));
-        response.setCertificazioniFabbrica(nameIdToNameIdResponse(certificazioniFabbricaDao.getAll()));
-        response.setCertificazioniMateriali(nameIdToNameIdResponse(certificazioniMaterialiDao.getAll()));
-        response.setFornitoreCategoria(nameIdToNameIdResponse(fornitoreCategoriaDao.getAll()));
-        response.setFornitoreSubcategoria(subcategoriaToSubcategoriaResponse(fornitoreSubcategoriaDao.getAll()));
+        response.setTrading(nameIdToNameIdResponse(tradingService.selectAll()));
+        response.setCertificazioniFabbrica(nameIdToNameIdResponse(certificazioniFabbricaService.selectAll()));
+        response.setCertificazioniMateriali(nameIdToNameIdResponse(certificazioniMaterialiService.selectAll()));
+        response.setFornitoreCategoria(nameIdToNameIdResponse(fornitoreCategoriaService.getAll()));
+        response.setFornitoreSubcategoria(fornitoreSubcategoriaService.getAllsubcategoriaResponse());
 
         return response;
     }
 
     @Override
+    @Transactional
     public FornitoreResponse save(FornitoreRequest request) {
-        if (request == null){
+        if (request == null) {
             return null;
         }
-        Fornitore fornitore ;
-        if (request.getId() != null && request.getId() > 0){
+        Fornitore fornitore;
+        if (request.getId() != null && request.getId() > 0) {
             fornitore = update(request);
         } else {
             fornitore = insert(request);
@@ -196,8 +257,7 @@ public class FornitoreServiceImpl implements FornitoreService {
         response.setId(fornitore.getId());
         response.setRagioneSociale(fornitore.getRagione_sociale());
         response.setTempoMercato(fornitore.getTempo_mercato());
-        response.setCategoria(fornitoreCategoriaService.getCategoriaResponseById(fornitore.getId_categoria()));
-        response.setSubcategoria(fornitoreSubcategoriaService.getSubcategoriaResponseById(fornitore.getId_subcategoria()));
+        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitore.getId())));
         response.setFatTot(fornitore.getFat_tot());
         response.setFatIt(fornitore.getFat_it());
         response.setNumeroDipendenti(fornitore.getNumero_dipendenti());
@@ -206,40 +266,29 @@ public class FornitoreServiceImpl implements FornitoreService {
         response.setContatto(contattoService.getContattoResponseById(fornitore.getId_contatto()));
         response.setProdottoList(prodottoService.getProdottoResponseListByIdFornitore(fornitore.getId()));
         response.setFotoList(fotoService.getFotoResponseByIdOggettoAndTipoOggetto(fornitore.getId(), Const.Oggetto.FORNITORE));
+        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitore.getId()));
+        response.setCertificazioniFabbrica(certificazioniFabbricaService.selectCertificazioneFabbricaResponseByIdFornitore(fornitore.getId()));
+        response.setCertificazioniMateriali(certificazioniMaterialiService.selectCertificazioneMaterialiResponseByIdFornitore(fornitore.getId()));
 
         response.setFatIt(fornitore.getFat_it());
 
         return response;
     }
 
-    private List<FornitoreSubcategoriaResponse> subcategoriaToSubcategoriaResponse(List<FornitoreSubcategoria> subcategoriaList) {
-        if (subcategoriaList == null){
+    private List<FornitoreCategoriaSubcategoria> getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(Long id) {
+        if (id == null){
             return null;
         }
-        if (subcategoriaList.isEmpty()){
-            return new ArrayList<>();
-        }
-        List<FornitoreSubcategoriaResponse> respList = new ArrayList<>();
-        subcategoriaList.forEach(nameId -> {
-            FornitoreSubcategoriaResponse resp = new FornitoreSubcategoriaResponse();
-            resp.setName(nameId.getNome());
-            resp.setId(nameId.getId());
-            resp.setIdCategoria(nameId.getId_categoria());
-            resp.setDisabled(nameId.isDisabled());
-            resp.setDtInserimento(nameId.getDt_inserimento());
-            resp.setDtModifica(nameId.getDt_modifica());
-            resp.setLastUserModified(nameId.getLast_user_modified());
-            resp.setFirstUser(nameId.getFirst_user());
-            respList.add(resp);
-        });
-        return respList;
+        return fornitoreDao.getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(id);
     }
 
+
+
     private List<NameIdResponse> nameIdToNameIdResponse(List<NameId> allList) {
-        if (allList == null){
+        if (allList == null) {
             return null;
         }
-        if (allList.isEmpty()){
+        if (allList.isEmpty()) {
             return new ArrayList<>();
         }
         List<NameIdResponse> respList = new ArrayList<>();

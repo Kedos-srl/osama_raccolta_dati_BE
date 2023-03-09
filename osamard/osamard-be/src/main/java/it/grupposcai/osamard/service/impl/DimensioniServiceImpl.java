@@ -1,11 +1,14 @@
 package it.grupposcai.osamard.service.impl;
 
 import it.grupposcai.osamard.bean.Dimensioni;
+import it.grupposcai.osamard.bean.NameId;
 import it.grupposcai.osamard.dao.DimensioniDao;
 import it.grupposcai.osamard.rest.response.NameIdResponse;
 import it.grupposcai.osamard.service.DimensioniService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("dimensioniService")
 public class DimensioniServiceImpl implements DimensioniService {
@@ -17,6 +20,11 @@ public class DimensioniServiceImpl implements DimensioniService {
     @Override
     public Dimensioni selectById(Long idDimensioni) {
         return dimensioniDao.getDimensioniById(idDimensioni);
+    }
+
+    @Override
+    public List<NameId> selectAll() {
+        return dimensioniDao.getAll();
     }
 
     @Override

@@ -10,14 +10,13 @@ GO
 use osama_raccolta_dati;
 GO 
 
-
--- campioni definition
+-- osama_raccolta_dati.dbo.campioni definition
 
 -- Drop table
 
--- DROP TABLE campioni;
+-- DROP TABLE osama_raccolta_dati.dbo.campioni;
 
-CREATE TABLE campioni (
+CREATE TABLE osama_raccolta_dati.dbo.campioni (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -29,13 +28,13 @@ CREATE TABLE campioni (
 );
 
 
--- certificazioni_fabbrica definition
+-- osama_raccolta_dati.dbo.certificazioni_fabbrica definition
 
 -- Drop table
 
--- DROP TABLE certificazioni_fabbrica;
+-- DROP TABLE osama_raccolta_dati.dbo.certificazioni_fabbrica;
 
-CREATE TABLE certificazioni_fabbrica (
+CREATE TABLE osama_raccolta_dati.dbo.certificazioni_fabbrica (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -47,13 +46,13 @@ CREATE TABLE certificazioni_fabbrica (
 );
 
 
--- certificazioni_materiali definition
+-- osama_raccolta_dati.dbo.certificazioni_materiali definition
 
 -- Drop table
 
--- DROP TABLE certificazioni_materiali;
+-- DROP TABLE osama_raccolta_dati.dbo.certificazioni_materiali;
 
-CREATE TABLE certificazioni_materiali (
+CREATE TABLE osama_raccolta_dati.dbo.certificazioni_materiali (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -65,13 +64,13 @@ CREATE TABLE certificazioni_materiali (
 );
 
 
--- contatto definition
+-- osama_raccolta_dati.dbo.contatto definition
 
 -- Drop table
 
--- DROP TABLE contatto;
+-- DROP TABLE osama_raccolta_dati.dbo.contatto;
 
-CREATE TABLE contatto (
+CREATE TABLE osama_raccolta_dati.dbo.contatto (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	posizione text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -84,13 +83,13 @@ CREATE TABLE contatto (
 );
 
 
--- dimensioni definition
+-- osama_raccolta_dati.dbo.dimensioni definition
 
 -- Drop table
 
--- DROP TABLE dimensioni;
+-- DROP TABLE osama_raccolta_dati.dbo.dimensioni;
 
-CREATE TABLE dimensioni (
+CREATE TABLE osama_raccolta_dati.dbo.dimensioni (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -102,13 +101,13 @@ CREATE TABLE dimensioni (
 );
 
 
--- fornitore_categoria definition
+-- osama_raccolta_dati.dbo.fornitore_categoria definition
 
 -- Drop table
 
--- DROP TABLE fornitore_categoria;
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_categoria;
 
-CREATE TABLE fornitore_categoria (
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_categoria (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT 0 NOT NULL,
@@ -120,13 +119,13 @@ CREATE TABLE fornitore_categoria (
 );
 
 
--- foto_tipo_oggetto definition
+-- osama_raccolta_dati.dbo.foto_tipo_oggetto definition
 
 -- Drop table
 
--- DROP TABLE foto_tipo_oggetto;
+-- DROP TABLE osama_raccolta_dati.dbo.foto_tipo_oggetto;
 
-CREATE TABLE foto_tipo_oggetto (
+CREATE TABLE osama_raccolta_dati.dbo.foto_tipo_oggetto (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT 0 NOT NULL,
@@ -138,13 +137,13 @@ CREATE TABLE foto_tipo_oggetto (
 );
 
 
--- materiale definition
+-- osama_raccolta_dati.dbo.materiale definition
 
 -- Drop table
 
--- DROP TABLE materiale;
+-- DROP TABLE osama_raccolta_dati.dbo.materiale;
 
-CREATE TABLE materiale (
+CREATE TABLE osama_raccolta_dati.dbo.materiale (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -156,13 +155,13 @@ CREATE TABLE materiale (
 );
 
 
--- moq definition
+-- osama_raccolta_dati.dbo.moq definition
 
 -- Drop table
 
--- DROP TABLE moq;
+-- DROP TABLE osama_raccolta_dati.dbo.moq;
 
-CREATE TABLE moq (
+CREATE TABLE osama_raccolta_dati.dbo.moq (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -174,13 +173,13 @@ CREATE TABLE moq (
 );
 
 
--- prezzo definition
+-- osama_raccolta_dati.dbo.prezzo definition
 
 -- Drop table
 
--- DROP TABLE prezzo;
+-- DROP TABLE osama_raccolta_dati.dbo.prezzo;
 
-CREATE TABLE prezzo (
+CREATE TABLE osama_raccolta_dati.dbo.prezzo (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT '0' NOT NULL,
@@ -192,13 +191,13 @@ CREATE TABLE prezzo (
 );
 
 
--- produzione definition
+-- osama_raccolta_dati.dbo.produzione definition
 
 -- Drop table
 
--- DROP TABLE produzione;
+-- DROP TABLE osama_raccolta_dati.dbo.produzione;
 
-CREATE TABLE produzione (
+CREATE TABLE osama_raccolta_dati.dbo.produzione (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT 0 NOT NULL,
@@ -210,13 +209,13 @@ CREATE TABLE produzione (
 );
 
 
--- trading definition
+-- osama_raccolta_dati.dbo.trading definition
 
 -- Drop table
 
--- DROP TABLE trading;
+-- DROP TABLE osama_raccolta_dati.dbo.trading;
 
-CREATE TABLE trading (
+CREATE TABLE osama_raccolta_dati.dbo.trading (
 	id bigint IDENTITY(1,1) NOT NULL,
 	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	DISABLED tinyint DEFAULT 0 NOT NULL,
@@ -228,13 +227,13 @@ CREATE TABLE trading (
 );
 
 
--- utente definition
+-- osama_raccolta_dati.dbo.utente definition
 
 -- Drop table
 
--- DROP TABLE utente;
+-- DROP TABLE osama_raccolta_dati.dbo.utente;
 
-CREATE TABLE utente (
+CREATE TABLE osama_raccolta_dati.dbo.utente (
 	id bigint IDENTITY(1,1) NOT NULL,
 	username varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	nome varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -251,80 +250,16 @@ CREATE TABLE utente (
 );
 
 
--- fornitore_subcategoria definition
+-- osama_raccolta_dati.dbo.fornitore definition
 
 -- Drop table
 
--- DROP TABLE fornitore_subcategoria;
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore;
 
-CREATE TABLE fornitore_subcategoria (
-	id bigint IDENTITY(1,1) NOT NULL,
-	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	id_categoria bigint NOT NULL,
-	DISABLED tinyint DEFAULT 0 NOT NULL,
-	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
-	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
-	LAST_USER_MODIFIED bigint NOT NULL,
-	FIRST_USER bigint NOT NULL,
-	CONSTRAINT PK__fornitor__3213E83F0ED67887 PRIMARY KEY (id),
-	CONSTRAINT FK_categoria FOREIGN KEY (id_categoria) REFERENCES fornitore_categoria(id)
-);
-
-
--- foto definition
-
--- Drop table
-
--- DROP TABLE foto;
-
-CREATE TABLE foto (
-	id bigint IDENTITY(1,1) NOT NULL,
-	titolo text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	path_file text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	id_oggetto bigint NOT NULL,
-	id_tipo_oggetto bigint NOT NULL,
-	DISABLED tinyint DEFAULT '0' NOT NULL,
-	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
-	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
-	LAST_USER_MODIFIED bigint NOT NULL,
-	FIRST_USER bigint NOT NULL,
-	CONSTRAINT FK_foto_tipo_Oggetto FOREIGN KEY (id_tipo_oggetto) REFERENCES foto_tipo_oggetto(id)
-);
-
-
--- pagamento definition
-
--- Drop table
-
--- DROP TABLE pagamento;
-
-CREATE TABLE pagamento (
-	id bigint NOT NULL,
-	id_campione bigint NOT NULL,
-	id_produzione bigint NOT NULL,
-	DISABLED tinyint DEFAULT '0' NOT NULL,
-	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
-	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
-	LAST_USER_MODIFIED bigint NOT NULL,
-	FIRST_USER bigint NOT NULL,
-	CONSTRAINT PK__pagament__52960AC3CA174B31 PRIMARY KEY (id_campione,id_produzione),
-	CONSTRAINT FK_pagamento_campioni2 FOREIGN KEY (id_campione) REFERENCES campioni(id),
-	CONSTRAINT FK_pagamento_produzione2 FOREIGN KEY (id_produzione) REFERENCES produzione(id)
-);
-
-
--- fornitore definition
-
--- Drop table
-
--- DROP TABLE fornitore;
-
-CREATE TABLE fornitore (
+CREATE TABLE osama_raccolta_dati.dbo.fornitore (
 	id bigint IDENTITY(1,1) NOT NULL,
 	ragione_sociale text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	tempo_mercato text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	id_categoria bigint DEFAULT NULL NULL,
-	id_subcategoria bigint DEFAULT NULL NULL,
 	fat_tot text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	fat_it text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	numero_dipendenti bigint DEFAULT NULL NULL,
@@ -337,35 +272,48 @@ CREATE TABLE fornitore (
 	LAST_USER_MODIFIED bigint NOT NULL,
 	FIRST_USER bigint NOT NULL,
 	CONSTRAINT PK__fornitor__3213E83FA9EE80F2 PRIMARY KEY (id),
-	CONSTRAINT FK_fornitore_categoria FOREIGN KEY (id_categoria) REFERENCES fornitore_categoria(id),
-	CONSTRAINT FK_fornitore_contatto FOREIGN KEY (id_contatto) REFERENCES contatto(id),
-	CONSTRAINT FK_fornitore_subcategoria FOREIGN KEY (id_subcategoria) REFERENCES fornitore_subcategoria(id),
-	CONSTRAINT FK_fornitore_trading FOREIGN KEY (id_trading) REFERENCES trading(id)
+	CONSTRAINT FK_fornitore_contatto FOREIGN KEY (id_contatto) REFERENCES osama_raccolta_dati.dbo.contatto(id),
+	CONSTRAINT FK_fornitore_trading FOREIGN KEY (id_trading) REFERENCES osama_raccolta_dati.dbo.trading(id)
 );
 
 
--- fornitore_certificati definition
+-- osama_raccolta_dati.dbo.fornitore_certificazioni_fabbrica definition
 
 -- Drop table
 
--- DROP TABLE fornitore_certificati;
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_certificazioni_fabbrica;
 
-CREATE TABLE fornitore_certificati (
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_certificazioni_fabbrica (
 	id_fornitore bigint NOT NULL,
 	id_certificazione bigint NOT NULL,
 	CONSTRAINT PK__fornitor__7941109CCB0D393C PRIMARY KEY (id_fornitore,id_certificazione),
-	CONSTRAINT FK_certificati_fornitore FOREIGN KEY (id_fornitore) REFERENCES fornitore(id),
-	CONSTRAINT FK_fornitore_certificati FOREIGN KEY (id_certificazione) REFERENCES certificazioni_fabbrica(id)
+	CONSTRAINT FK_certificati_fornitore FOREIGN KEY (id_fornitore) REFERENCES osama_raccolta_dati.dbo.fornitore(id),
+	CONSTRAINT FK_fornitore_certificati FOREIGN KEY (id_certificazione) REFERENCES osama_raccolta_dati.dbo.certificazioni_fabbrica(id)
 );
 
 
--- fornitore_geolocalizzazione definition
+-- osama_raccolta_dati.dbo.fornitore_certificazioni_materiali definition
 
 -- Drop table
 
--- DROP TABLE fornitore_geolocalizzazione;
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_certificazioni_materiali;
 
-CREATE TABLE fornitore_geolocalizzazione (
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_certificazioni_materiali (
+	id_fornitore bigint NOT NULL,
+	id_certificazione bigint NOT NULL,
+	CONSTRAINT PK__fornitor__7941109C91BBF1C3 PRIMARY KEY (id_fornitore,id_certificazione),
+	CONSTRAINT FK_certificati_fornitore_materiali FOREIGN KEY (id_fornitore) REFERENCES osama_raccolta_dati.dbo.fornitore(id),
+	CONSTRAINT FK_fornitore_certificati_materiali FOREIGN KEY (id_certificazione) REFERENCES osama_raccolta_dati.dbo.certificazioni_materiali(id)
+);
+
+
+-- osama_raccolta_dati.dbo.fornitore_geolocalizzazione definition
+
+-- Drop table
+
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_geolocalizzazione;
+
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_geolocalizzazione (
 	id bigint IDENTITY(1,1) NOT NULL,
 	id_fornitore bigint NOT NULL,
 	area text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -376,17 +324,79 @@ CREATE TABLE fornitore_geolocalizzazione (
 	LAST_USER_MODIFIED bigint NOT NULL,
 	FIRST_USER bigint NOT NULL,
 	CONSTRAINT PK__fornitor__3213E83F18A2730E PRIMARY KEY (id),
-	CONSTRAINT FK_fornitore_Geolocalizzazione FOREIGN KEY (id_fornitore) REFERENCES fornitore(id)
+	CONSTRAINT FK_fornitore_Geolocalizzazione FOREIGN KEY (id_fornitore) REFERENCES osama_raccolta_dati.dbo.fornitore(id)
 );
 
 
--- prodotto definition
+-- osama_raccolta_dati.dbo.fornitore_subcategoria definition
 
 -- Drop table
 
--- DROP TABLE prodotto;
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_subcategoria;
 
-CREATE TABLE prodotto (
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_subcategoria (
+	id bigint IDENTITY(1,1) NOT NULL,
+	nome text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	id_categoria bigint NOT NULL,
+	DISABLED tinyint DEFAULT 0 NOT NULL,
+	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
+	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
+	LAST_USER_MODIFIED bigint NOT NULL,
+	FIRST_USER bigint NOT NULL,
+	CONSTRAINT PK__fornitor__3213E83F0ED67887 PRIMARY KEY (id),
+	CONSTRAINT FK_categoria FOREIGN KEY (id_categoria) REFERENCES osama_raccolta_dati.dbo.fornitore_categoria(id)
+);
+
+
+-- osama_raccolta_dati.dbo.foto definition
+
+-- Drop table
+
+-- DROP TABLE osama_raccolta_dati.dbo.foto;
+
+CREATE TABLE osama_raccolta_dati.dbo.foto (
+	id bigint IDENTITY(1,1) NOT NULL,
+	titolo text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	path_file text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	id_oggetto bigint NOT NULL,
+	id_tipo_oggetto bigint NOT NULL,
+	DISABLED tinyint DEFAULT '0' NOT NULL,
+	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
+	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
+	LAST_USER_MODIFIED bigint NOT NULL,
+	FIRST_USER bigint NOT NULL,
+	CONSTRAINT FK_foto_tipo_Oggetto FOREIGN KEY (id_tipo_oggetto) REFERENCES osama_raccolta_dati.dbo.foto_tipo_oggetto(id)
+);
+
+
+-- osama_raccolta_dati.dbo.pagamento definition
+
+-- Drop table
+
+-- DROP TABLE osama_raccolta_dati.dbo.pagamento;
+
+CREATE TABLE osama_raccolta_dati.dbo.pagamento (
+	id bigint NOT NULL,
+	id_campione bigint NOT NULL,
+	id_produzione bigint NOT NULL,
+	DISABLED tinyint DEFAULT '0' NOT NULL,
+	DT_INSERIMENTO datetime DEFAULT getdate() NOT NULL,
+	DT_MODIFICA datetime DEFAULT getdate() NOT NULL,
+	LAST_USER_MODIFIED bigint NOT NULL,
+	FIRST_USER bigint NOT NULL,
+	CONSTRAINT PK__pagament__52960AC3CA174B31 PRIMARY KEY (id_campione,id_produzione),
+	CONSTRAINT FK_pagamento_campioni2 FOREIGN KEY (id_campione) REFERENCES osama_raccolta_dati.dbo.campioni(id),
+	CONSTRAINT FK_pagamento_produzione2 FOREIGN KEY (id_produzione) REFERENCES osama_raccolta_dati.dbo.produzione(id)
+);
+
+
+-- osama_raccolta_dati.dbo.prodotto definition
+
+-- Drop table
+
+-- DROP TABLE osama_raccolta_dati.dbo.prodotto;
+
+CREATE TABLE osama_raccolta_dati.dbo.prodotto (
 	id bigint IDENTITY(1,1) NOT NULL,
 	cod_articolo text COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	id_materiale bigint DEFAULT NULL NULL,
@@ -400,9 +410,27 @@ CREATE TABLE prodotto (
 	FIRST_USER bigint NOT NULL,
 	id_fornitore bigint NOT NULL,
 	CONSTRAINT PK__prodotto__3213E83F4189A959 PRIMARY KEY (id),
-	CONSTRAINT FK_prodotto_materiale FOREIGN KEY (id_materiale) REFERENCES materiale(id),
-	CONSTRAINT K_prodotto_dimensioni FOREIGN KEY (id_dimensioni) REFERENCES dimensioni(id),
-	CONSTRAINT K_prodotto_moq FOREIGN KEY (id_moq) REFERENCES moq(id),
-	CONSTRAINT K_prodotto_prezzo FOREIGN KEY (id_prezzo) REFERENCES prezzo(id),
-	CONSTRAINT prodotto_FK FOREIGN KEY (id_fornitore) REFERENCES fornitore(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT FK_prodotto_materiale FOREIGN KEY (id_materiale) REFERENCES osama_raccolta_dati.dbo.materiale(id),
+	CONSTRAINT K_prodotto_dimensioni FOREIGN KEY (id_dimensioni) REFERENCES osama_raccolta_dati.dbo.dimensioni(id),
+	CONSTRAINT K_prodotto_moq FOREIGN KEY (id_moq) REFERENCES osama_raccolta_dati.dbo.moq(id),
+	CONSTRAINT K_prodotto_prezzo FOREIGN KEY (id_prezzo) REFERENCES osama_raccolta_dati.dbo.prezzo(id),
+	CONSTRAINT prodotto_FK FOREIGN KEY (id_fornitore) REFERENCES osama_raccolta_dati.dbo.fornitore(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- osama_raccolta_dati.dbo.fornitore_categoria_subcategoria definition
+
+-- Drop table
+
+-- DROP TABLE osama_raccolta_dati.dbo.fornitore_categoria_subcategoria;
+
+CREATE TABLE osama_raccolta_dati.dbo.fornitore_categoria_subcategoria (
+	id bigint IDENTITY(1,1) NOT NULL,
+	id_fornitore bigint NOT NULL,
+	id_categoria bigint DEFAULT NULL NULL,
+	id_subcategoria bigint DEFAULT NULL NULL,
+	CONSTRAINT PK__fornitor__3213E83F35074444 PRIMARY KEY (id),
+	CONSTRAINT FK_fornitore_categoria_subcategoria FOREIGN KEY (id_fornitore) REFERENCES osama_raccolta_dati.dbo.fornitore(id),
+	CONSTRAINT FK_fornitore_categoria_subcategoria_c FOREIGN KEY (id_categoria) REFERENCES osama_raccolta_dati.dbo.fornitore_categoria(id),
+	CONSTRAINT FK_fornitore_categoria_subcategoria_s FOREIGN KEY (id_subcategoria) REFERENCES osama_raccolta_dati.dbo.fornitore_subcategoria(id)
 );

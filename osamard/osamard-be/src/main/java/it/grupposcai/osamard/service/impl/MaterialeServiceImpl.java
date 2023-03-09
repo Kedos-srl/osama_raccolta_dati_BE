@@ -1,11 +1,14 @@
 package it.grupposcai.osamard.service.impl;
 
 import it.grupposcai.osamard.bean.Materiale;
+import it.grupposcai.osamard.bean.NameId;
 import it.grupposcai.osamard.dao.MaterialeDao;
 import it.grupposcai.osamard.rest.response.NameIdResponse;
 import it.grupposcai.osamard.service.MaterialeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("materialeService")
 public class MaterialeServiceImpl implements MaterialeService {
@@ -17,6 +20,11 @@ public class MaterialeServiceImpl implements MaterialeService {
     @Override
     public Materiale selectById(Long idMateriale) {
         return materialeDao.getMaterialeById(idMateriale);
+    }
+
+    @Override
+    public List<NameId> selectAll(){
+        return materialeDao.getAll();
     }
 
     @Override

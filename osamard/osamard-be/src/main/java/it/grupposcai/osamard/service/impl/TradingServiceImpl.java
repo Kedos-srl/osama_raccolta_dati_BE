@@ -1,12 +1,14 @@
 package it.grupposcai.osamard.service.impl;
 
-import it.grupposcai.osamard.bean.FornitoreCategoria;
+import it.grupposcai.osamard.bean.NameId;
 import it.grupposcai.osamard.bean.Trading;
 import it.grupposcai.osamard.dao.TradingDao;
 import it.grupposcai.osamard.rest.response.NameIdResponse;
 import it.grupposcai.osamard.service.TradingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("tradingService")
 public class TradingServiceImpl implements TradingService {
@@ -18,6 +20,11 @@ public class TradingServiceImpl implements TradingService {
     @Override
     public Trading selectById(Long id) {
         return tradingDao.getTradingById(id);
+    }
+
+    @Override
+    public List<NameId> selectAll() {
+        return tradingDao.getAll();
     }
 
     @Override

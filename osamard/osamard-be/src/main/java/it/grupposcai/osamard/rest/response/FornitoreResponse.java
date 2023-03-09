@@ -10,9 +10,7 @@ public class FornitoreResponse implements Serializable {
     private Long id;
     private String ragioneSociale;
     private String tempoMercato;
-    private NameIdResponse categoria;
-    private FornitoreSubcategoriaResponse subcategoria;
-
+    private List<FornitoreCategoriaResponse> CategoriaList;
     private String fatTot;
     private String fatIt;
     private Long numeroDipendenti;
@@ -22,6 +20,9 @@ public class FornitoreResponse implements Serializable {
 
     private List<ProdottoResponse> prodottoList;
     private List<FotoResponse> fotoList;
+    private FornitoreGeolocalizzazioneResponse fornitoreGeolocalizzazione;
+    private List<NameIdResponse> certificazioniMateriali;
+    private List<NameIdResponse> certificazioniFabbrica;
 
     public Long getId() {
         return id;
@@ -45,22 +46,6 @@ public class FornitoreResponse implements Serializable {
 
     public void setTempoMercato(String tempoMercato) {
         this.tempoMercato = tempoMercato;
-    }
-
-    public NameIdResponse getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(NameIdResponse categoria) {
-        this.categoria = categoria;
-    }
-
-    public FornitoreSubcategoriaResponse getSubcategoria() {
-        return subcategoria;
-    }
-
-    public void setSubcategoria(FornitoreSubcategoriaResponse subcategoria) {
-        this.subcategoria = subcategoria;
     }
 
     public String getFatTot() {
@@ -125,5 +110,37 @@ public class FornitoreResponse implements Serializable {
 
     public void setFotoList(List<FotoResponse> fotoList) {
         this.fotoList = fotoList;
+    }
+
+    public FornitoreGeolocalizzazioneResponse getFornitoreGeolocalizzazione() {
+        return fornitoreGeolocalizzazione;
+    }
+
+    public void setFornitoreGeolocalizzazione(FornitoreGeolocalizzazioneResponse fornitoreGeolocalizzazione) {
+        this.fornitoreGeolocalizzazione = fornitoreGeolocalizzazione;
+    }
+
+    public List<NameIdResponse> getCertificazioniMateriali() {
+        return certificazioniMateriali;
+    }
+
+    public void setCertificazioniMateriali(List<NameIdResponse> certificazioniMateriali) {
+        this.certificazioniMateriali = certificazioniMateriali;
+    }
+
+    public List<NameIdResponse> getCertificazioniFabbrica() {
+        return certificazioniFabbrica;
+    }
+
+    public void setCertificazioniFabbrica(List<NameIdResponse> certificazioniFabbrica) {
+        this.certificazioniFabbrica = certificazioniFabbrica;
+    }
+
+    public List<FornitoreCategoriaResponse> getCategoriaList() {
+        return CategoriaList;
+    }
+
+    public void setCategoriaList(List<FornitoreCategoriaResponse> categoriaList) {
+        CategoriaList = categoriaList;
     }
 }

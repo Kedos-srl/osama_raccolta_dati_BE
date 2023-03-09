@@ -1,8 +1,5 @@
 package it.grupposcai.osamard.rest.response;
 
-import it.grupposcai.osamard.bean.*;
-import it.grupposcai.osamard.bean.NameId;
-
 import java.io.Serializable;
 import java.util.List;
 

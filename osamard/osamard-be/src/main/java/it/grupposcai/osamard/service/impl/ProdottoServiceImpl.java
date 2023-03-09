@@ -42,6 +42,8 @@ public class ProdottoServiceImpl implements ProdottoService {
         if (request.getFotoList() != null && !request.getFotoList().isEmpty()) {
             request.getFotoList().forEach(fotoRequest -> {
                 fotoRequest.setIdOggetto(prodotto.getId());
+                fotoRequest.setIdTipoOggetto(Const.Oggetto.PRODOTTO);
+
                 fotoRequest.setDisabled(false);
                 fotoRequest.setDtInserimento(LocalDateTime.now());
                 fotoRequest.setDtModifica(LocalDateTime.now());
