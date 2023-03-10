@@ -68,4 +68,9 @@ public class CertificazioniFabbricaServiceImpl implements CertificazioniFabbrica
         return responseList;
     }
 
+    @Override
+    public void deleteCertificazioniFabbricaByIdFornitore(Long idFornitore) {
+        certificazioniFabbricaDao.deleteCertificazioniFabbricaByIdFornitore(idFornitore);
+    }
+
 }

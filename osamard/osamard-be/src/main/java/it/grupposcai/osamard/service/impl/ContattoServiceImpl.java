@@ -1,14 +1,14 @@
 package it.grupposcai.osamard.service.impl;
 
 import it.grupposcai.osamard.bean.Contatto;
-import it.grupposcai.osamard.bean.FornitoreCategoria;
 import it.grupposcai.osamard.dao.ContattoDao;
 import it.grupposcai.osamard.rest.request.ContattoRequest;
 import it.grupposcai.osamard.rest.response.ContattoResponse;
-import it.grupposcai.osamard.rest.response.NameIdResponse;
 import it.grupposcai.osamard.service.ContattoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service("contattoService")
 public class ContattoServiceImpl implements ContattoService {
@@ -28,7 +28,29 @@ public class ContattoServiceImpl implements ContattoService {
             return null;
         }
 
-        Contatto contatto = contattoRequestToContatt(request);
+        Contatto contatto = contattoRequestToContatto(request);
+        contattoDao.insert(contatto);
+        return contatto;
+    }
+
+    @Override
+    public Contatto update(ContattoRequest request){
+        if (request == null){
+            return null;
+        }
+        Contatto contattoDb = null;
+        if (request.getId() != null) {
+            contattoDb = selectById(request.getId());
+        }
+        Contatto contatto = contattoRequestToContatto(request);
+
+        if (contattoDb != null){
+            contatto.setId(contattoDb.getId());
+            contattoDao.update(contatto);
+            return contatto;
+        }
+        contatto.setDt_inserimento(LocalDateTime.now());
+        contatto.setFirst_user(contatto.getLast_user_modified());
         contattoDao.insert(contatto);
         return contatto;
     }
@@ -51,7 +73,7 @@ public class ContattoServiceImpl implements ContattoService {
         return resp;
     }
 
-    private Contatto contattoRequestToContatt(ContattoRequest request) {
+    private Contatto contattoRequestToContatto(ContattoRequest request) {
         Contatto contatto = new Contatto();
         contatto.setNome(request.getNome());
         contatto.setPosizione(request.getPosizione());

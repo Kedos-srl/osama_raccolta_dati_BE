@@ -1,10 +1,7 @@
 package it.grupposcai.osamard.dao;
 
 import it.grupposcai.osamard.bean.Contatto;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 public interface ContattoDao {
 
@@ -17,4 +14,13 @@ public interface ContattoDao {
             + " values(#{nome},#{posizione}, #{disabled}, #{dt_inserimento}, #{dt_modifica}, #{last_user_modified}, #{first_user})")
     @Options(useGeneratedKeys=true, keyProperty = "id")
     void insert(Contatto contatto);
+
+    @Update(" UPDATE contatto" +
+            "	SET nome = #{nome}, " +
+            "       posizione = #{posizione}, " +
+            "       disabled = #{disabled}, " +
+            "       dt_modifica = #{dt_modifica}, " +
+            "       last_user_modified = #{last_user_modified}" +
+            " WHERE id = #{id}")
+    void update(Contatto contatto);
 }

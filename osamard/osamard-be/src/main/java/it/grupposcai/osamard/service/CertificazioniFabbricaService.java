@@ -20,4 +20,6 @@ public interface CertificazioniFabbricaService {
     List<NameId> selectAll();
 
     List<NameIdResponse> selectCertificazioneFabbricaResponseByIdFornitore(Long idFornitore);
+
+    void deleteCertificazioniFabbricaByIdFornitore(Long id);
 }

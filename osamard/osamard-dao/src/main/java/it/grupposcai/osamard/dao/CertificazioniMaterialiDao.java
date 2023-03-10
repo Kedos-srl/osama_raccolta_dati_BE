@@ -3,6 +3,7 @@ package it.grupposcai.osamard.dao;
 import it.grupposcai.osamard.bean.CertificazioniMateriali;
 import it.grupposcai.osamard.bean.FornitoreCertificazione;
 import it.grupposcai.osamard.bean.NameId;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -29,5 +30,8 @@ public interface CertificazioniMaterialiDao {
             "   on cf.id = fcf.id_certificazione " +
             " where fcf.id_fornitore = #{idFornitore}")
     List<CertificazioniMateriali> getCertificazioniMaterialiByIdFornitore(@Param("idFornitore") Long idFornitore);
-    
+
+    @Delete("DELETE FROM fornitore_certificazioni_materiali " +
+            " WHERE id_fornitore = #{idFornitore}")
+    void deleteCertificazioniMaterialiByIdFornitore(Long idFornitore);
 }

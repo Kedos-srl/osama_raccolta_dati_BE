@@ -18,7 +18,18 @@ public interface FornitoreDao {
     @Select("select * from fornitore where id = #{id}")
     public Fornitore getById(@Param("id") Long id);
 
-    @Update("update fornitore set nome =  #{nome}, cognome = #{cognome}, id_profilo = #{id_profilo}, disabled = #{disabled}, last_user_modified = #{last_user_modified}  where id_fornitore = #{id_fornitore}")
+    @Update("update fornitore set " +
+            "ragione_sociale =  #{ragione_sociale}, " +
+            "tempo_mercato = #{tempo_mercato}, " +
+            "fat_tot = #{fat_tot}, " +
+            "fat_it = #{fat_it}, " +
+            "numero_dipendenti = #{numero_dipendenti}, " +
+            "rd_interno = #{rd_interno}, " +
+            "id_trading = #{id_trading}, " +
+            "id_contatto = #{id_contatto}, " +
+            "disabled = #{disabled}, " +
+            "last_user_modified = #{last_user_modified}  " +
+            "where id = #{id}")
     public void update(Fornitore fornitore);
 
     @Select("select * from fornitore")
@@ -47,4 +58,8 @@ public interface FornitoreDao {
     List<Fornitore> getFornitoriBySearchCriteria(Map<String, Object> searchCriteria);
 
     Long countFornitoriBySearchCriteria(Map<String, Object> searchCriteria);
+
+    @Delete("DELETE FROM fornitore_categoria_subcategoria " +
+            " WHERE id_fornitore = #{idFornitore}")
+    void deleteFornitoreCategoriaSubcategoriaByIdFornitore(@Param("idFornitore") Long idFornitore);
 }

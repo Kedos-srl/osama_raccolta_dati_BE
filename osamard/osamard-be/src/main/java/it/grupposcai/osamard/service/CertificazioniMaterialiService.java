@@ -21,4 +21,6 @@ public interface CertificazioniMaterialiService {
     NameIdResponse getCertificazioniMaterialiResponseById(Long id);
 
     List<NameIdResponse> selectCertificazioneMaterialiResponseByIdFornitore(Long idFornitore);
+
+    void deleteCertificazioniMaterialiByIdFornitore(Long id);
 }

@@ -10,5 +10,7 @@ public interface ContattoService {
 
     Contatto save(ContattoRequest request);
 
+    Contatto update(ContattoRequest request);
+
     ContattoResponse getContattoResponseById(Long id_contatto);
 }

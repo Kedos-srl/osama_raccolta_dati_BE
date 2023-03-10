@@ -69,5 +69,8 @@ public class CertificazioniMaterialiServiceImpl implements CertificazioniMateria
         return responseList;
     }
 
-
+    @Override
+    public void deleteCertificazioniMaterialiByIdFornitore(Long idFornitore) {
+        certificazioniMaterialiDao.deleteCertificazioniMaterialiByIdFornitore(idFornitore);
+    }
 }

@@ -1,9 +1,14 @@
 package it.grupposcai.osamard.service.impl;
 
 import it.grupposcai.osamard.bean.*;
-import it.grupposcai.osamard.dao.*;
+import it.grupposcai.osamard.dao.CampioniDao;
+import it.grupposcai.osamard.dao.FornitoreDao;
+import it.grupposcai.osamard.dao.ProduzioneDao;
 import it.grupposcai.osamard.rest.request.FornitoreRequest;
-import it.grupposcai.osamard.rest.response.*;
+import it.grupposcai.osamard.rest.response.FornitoreResponse;
+import it.grupposcai.osamard.rest.response.ItemFormResponse;
+import it.grupposcai.osamard.rest.response.NameIdResponse;
+import it.grupposcai.osamard.rest.response.SearchResponseCommon;
 import it.grupposcai.osamard.service.*;
 import it.grupposcai.osamard.util.Const;
 import org.apache.log4j.Logger;
@@ -122,10 +127,10 @@ public class FornitoreServiceImpl implements FornitoreService {
         // Salvo le certificazioni
         if (request.getIdCertificatiFabbricaList() != null && !request.getIdCertificatiFabbricaList().isEmpty()) {
             request.getIdCertificatiFabbricaList().forEach(idCertificazione -> {
-                if (idCertificazione == null){
+                if (idCertificazione == null) {
                     return;
                 }
-                CertificazioniFabbrica certificazioniFabbrica =  certificazioniFabbricaService.selectById(idCertificazione);
+                CertificazioniFabbrica certificazioniFabbrica = certificazioniFabbricaService.selectById(idCertificazione);
                 if (certificazioniFabbrica != null) {
                     FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
                     fornitoreCertificazione.setId_fornitore(fornitore.getId());
@@ -137,10 +142,10 @@ public class FornitoreServiceImpl implements FornitoreService {
 
         if (request.getIdCertificatiMaterialiList() != null && !request.getIdCertificatiMaterialiList().isEmpty()) {
             request.getIdCertificatiMaterialiList().forEach(idCertificazione -> {
-                if (idCertificazione == null){
+                if (idCertificazione == null) {
                     return;
                 }
-                CertificazioniMateriali certificazioniMateriali =  certificazioniMaterialiService.selectById(idCertificazione);
+                CertificazioniMateriali certificazioniMateriali = certificazioniMaterialiService.selectById(idCertificazione);
                 if (certificazioniMateriali != null) {
                     FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
                     fornitoreCertificazione.setId_fornitore(fornitore.getId());
@@ -195,9 +200,120 @@ public class FornitoreServiceImpl implements FornitoreService {
         return fornitore;
     }
 
-    private Fornitore update(FornitoreRequest fornitore) {
-        // TODO ZAMMA implementare metodo
-        return null;
+    private Fornitore update(FornitoreRequest request) {
+        if (request.getId() == null || request.getId() < 1) {
+            return new Fornitore();
+        }
+        Fornitore fornitoreDb = fornitoreDao.getById(request.getId());
+        if (fornitoreDb == null) {
+            return null;
+        }
+        // Salvo il contatto
+        if (request.getContatto() != null) {
+            request.getContatto().setDisabled(false);
+            request.getContatto().setDtModifica(LocalDateTime.now());
+            request.getContatto().setLastUserModified(request.getLastUserModified());
+        }
+        Contatto contatto = contattoService.update(request.getContatto());
+
+        fornitoreDb.setRagione_sociale(request.getRagioneSociale());
+        fornitoreDb.setTempo_mercato(request.getTempoMercato());
+        fornitoreDb.setFat_tot(request.getFatTot());
+        fornitoreDb.setFat_it(request.getFatIt());
+        fornitoreDb.setNumero_dipendenti(request.getNumeroDipendenti());
+        fornitoreDb.setRd_interno(request.getRdInterno());
+        fornitoreDb.setId_contatto(contatto.getId());
+
+        Trading trading = tradingService.selectById(request.getIdTrading());
+        if (trading != null) {
+            fornitoreDb.setId_trading(trading.getId());
+        }
+
+        fornitoreDb.setDisabled(request.getDisabled() == null ? false : request.getDisabled());
+        fornitoreDb.setDt_modifica(LocalDateTime.now());
+        fornitoreDb.setLast_user_modified(request.getLastUserModified());
+
+        fornitoreDao.update(fornitoreDb);
+
+        // Salvo le categorie
+        fornitoreDao.deleteFornitoreCategoriaSubcategoriaByIdFornitore(fornitoreDb.getId());
+        if (request.getFornitoreCategoria() != null && !request.getFornitoreCategoria().isEmpty()) {
+            request.getFornitoreCategoria().forEach(categoria -> {
+                if (categoria.getIdCategoria() == null) {
+                    return;
+                }
+                FornitoreCategoria fornitoreCategoria = fornitoreCategoriaService.selectById(categoria.getIdCategoria());
+                if (fornitoreCategoria == null) {
+                    return;
+                }
+
+                FornitoreCategoriaSubcategoria fornitoreCategoriaSubcategoria = new FornitoreCategoriaSubcategoria();
+                fornitoreCategoriaSubcategoria.setId_categoria(fornitoreCategoria.getId());
+                fornitoreCategoriaSubcategoria.setId_fornitore(fornitoreDb.getId());
+
+                if (categoria.getIdSubcategoriaList() != null && !categoria.getIdSubcategoriaList().isEmpty()) {
+                    categoria.getIdSubcategoriaList().forEach(idSubcategoria -> {
+                        FornitoreSubcategoria fornitoreSubcategoria = fornitoreSubcategoriaService.selectById(idSubcategoria);
+                        if (fornitoreSubcategoria != null) {
+                            FornitoreCategoriaSubcategoria fornitoreCategoriaSubcategoria2 = new FornitoreCategoriaSubcategoria();
+                            fornitoreCategoriaSubcategoria2.setId_fornitore(fornitoreDb.getId());
+                            fornitoreCategoriaSubcategoria2.setId_categoria(fornitoreCategoria.getId());
+                            fornitoreCategoriaSubcategoria2.setId_subcategoria(fornitoreSubcategoria.getId());
+                            fornitoreDao.insertFornitoreCategoriaSubcategoria(fornitoreCategoriaSubcategoria2);
+                        }
+                    });
+                    return;
+                }
+                fornitoreDao.insertFornitoreCategoriaSubcategoria(fornitoreCategoriaSubcategoria);
+            });
+        }
+
+        // Salvo le certificazioni
+        certificazioniFabbricaService.deleteCertificazioniFabbricaByIdFornitore(fornitoreDb.getId());
+
+        if (request.getIdCertificatiFabbricaList() != null && !request.getIdCertificatiFabbricaList().isEmpty()) {
+            request.getIdCertificatiFabbricaList().forEach(idCertificazione -> {
+                if (idCertificazione == null) {
+                    return;
+                }
+                CertificazioniFabbrica certificazioniFabbrica = certificazioniFabbricaService.selectById(idCertificazione);
+                if (certificazioniFabbrica != null) {
+                    FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
+                    fornitoreCertificazione.setId_fornitore(fornitoreDb.getId());
+                    fornitoreCertificazione.setId_certificazione(certificazioniFabbrica.getId());
+                    certificazioniFabbricaService.insertCertificazioniFabbrica(fornitoreCertificazione);
+                }
+            });
+        }
+
+        certificazioniMaterialiService.deleteCertificazioniMaterialiByIdFornitore(fornitoreDb.getId());
+        if (request.getIdCertificatiMaterialiList() != null && !request.getIdCertificatiMaterialiList().isEmpty()) {
+            request.getIdCertificatiMaterialiList().forEach(idCertificazione -> {
+                if (idCertificazione == null) {
+                    return;
+                }
+                CertificazioniMateriali certificazioniMateriali = certificazioniMaterialiService.selectById(idCertificazione);
+                if (certificazioniMateriali != null) {
+                    FornitoreCertificazione fornitoreCertificazione = new FornitoreCertificazione();
+                    fornitoreCertificazione.setId_fornitore(fornitoreDb.getId());
+                    fornitoreCertificazione.setId_certificazione(certificazioniMateriali.getId());
+                    certificazioniMaterialiService.insertCertificazioniMateriali(fornitoreCertificazione);
+                }
+            });
+        }
+
+//        if (request.getProdottoList() != null && !request.getProdottoList().isEmpty()) {
+//            request.getProdottoList().forEach(prodottoRequest -> {
+//                prodottoRequest.setIdFornitore(fornitoreDb.getId());
+//                prodottoRequest.setDisabled(request.getDisabled() == null ? false : request.getDisabled());
+//                prodottoRequest.setDtInserimento(LocalDateTime.now());
+//                prodottoRequest.setDtModifica(LocalDateTime.now());
+//                prodottoRequest.setFirstUser(request.getFirstUser());
+//                prodottoRequest.setLastUserModified(request.getLastUserModified());
+//                prodottoService.insert(prodottoRequest);
+//            });
+//        }
+        return fornitoreDb;
     }
 
     @Override
@@ -259,7 +375,7 @@ public class FornitoreServiceImpl implements FornitoreService {
         List<Fornitore> fornitoreList = getFornitoriBySearchCriteria(searchCriteria);
         SearchResponseCommon resp = new SearchResponseCommon();
         resp.setResponses(new ArrayList<>());
-        if (fornitoreList == null || fornitoreList.isEmpty()){
+        if (fornitoreList == null || fornitoreList.isEmpty()) {
             return resp;
         }
         fornitoreList.forEach(fornitore -> resp.getResponses().add(fornitoreToFornitoreResponseForSearch(fornitore)));
@@ -271,54 +387,53 @@ public class FornitoreServiceImpl implements FornitoreService {
         return fornitoreDao.getFornitoriBySearchCriteria(searchCriteria);
     }
 
-    private FornitoreResponse fornitoreToFornitoreResponse(Fornitore fornitore) {
+    private FornitoreResponse fornitoreToFornitoreResponse(Fornitore fornitoreDb) {
         FornitoreResponse response = new FornitoreResponse();
 
-        response.setId(fornitore.getId());
-        response.setRagioneSociale(fornitore.getRagione_sociale());
-        response.setTempoMercato(fornitore.getTempo_mercato());
-        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitore.getId())));
-        response.setFatTot(fornitore.getFat_tot());
-        response.setFatIt(fornitore.getFat_it());
-        response.setNumeroDipendenti(fornitore.getNumero_dipendenti());
-        response.setRdInterno(fornitore.getRd_interno());
-        response.setTrading(tradingService.getTradingResponseById(fornitore.getId_trading()));
-        response.setContatto(contattoService.getContattoResponseById(fornitore.getId_contatto()));
-        response.setProdottoList(prodottoService.getProdottoResponseListByIdFornitore(fornitore.getId()));
-        response.setFotoList(fotoService.getFotoResponseByIdOggettoAndTipoOggetto(fornitore.getId(), Const.Oggetto.FORNITORE));
-        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitore.getId()));
-        response.setCertificazioniFabbrica(certificazioniFabbricaService.selectCertificazioneFabbricaResponseByIdFornitore(fornitore.getId()));
-        response.setCertificazioniMateriali(certificazioniMaterialiService.selectCertificazioneMaterialiResponseByIdFornitore(fornitore.getId()));
+        response.setId(fornitoreDb.getId());
+        response.setRagioneSociale(fornitoreDb.getRagione_sociale());
+        response.setTempoMercato(fornitoreDb.getTempo_mercato());
+        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitoreDb.getId())));
+        response.setFatTot(fornitoreDb.getFat_tot());
+        response.setFatIt(fornitoreDb.getFat_it());
+        response.setNumeroDipendenti(fornitoreDb.getNumero_dipendenti());
+        response.setRdInterno(fornitoreDb.getRd_interno());
+        response.setTrading(tradingService.getTradingResponseById(fornitoreDb.getId_trading()));
+        response.setContatto(contattoService.getContattoResponseById(fornitoreDb.getId_contatto()));
+        response.setProdottoList(prodottoService.getProdottoResponseListByIdFornitore(fornitoreDb.getId()));
+        response.setFotoList(fotoService.getFotoResponseByIdOggettoAndTipoOggetto(fornitoreDb.getId(), Const.Oggetto.FORNITORE));
+        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitoreDb.getId()));
+        response.setCertificazioniFabbrica(certificazioniFabbricaService.selectCertificazioneFabbricaResponseByIdFornitore(fornitoreDb.getId()));
+        response.setCertificazioniMateriali(certificazioniMaterialiService.selectCertificazioneMaterialiResponseByIdFornitore(fornitoreDb.getId()));
 
-        response.setFatIt(fornitore.getFat_it());
+        response.setFatIt(fornitoreDb.getFat_it());
 
         return response;
     }
 
-    private FornitoreResponse fornitoreToFornitoreResponseForSearch(Fornitore fornitore) {
+    private FornitoreResponse fornitoreToFornitoreResponseForSearch(Fornitore fornitoreDb) {
         FornitoreResponse response = new FornitoreResponse();
 
-        response.setId(fornitore.getId());
-        response.setRagioneSociale(fornitore.getRagione_sociale());
-        response.setTempoMercato(fornitore.getTempo_mercato());
-        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitore.getId())));
-        response.setFatTot(fornitore.getFat_tot());
-        response.setFatIt(fornitore.getFat_it());
-        response.setNumeroDipendenti(fornitore.getNumero_dipendenti());
-        response.setRdInterno(fornitore.getRd_interno());
-        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitore.getId()));
-        response.setFatIt(fornitore.getFat_it());
+        response.setId(fornitoreDb.getId());
+        response.setRagioneSociale(fornitoreDb.getRagione_sociale());
+        response.setTempoMercato(fornitoreDb.getTempo_mercato());
+        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitoreDb.getId())));
+        response.setFatTot(fornitoreDb.getFat_tot());
+        response.setFatIt(fornitoreDb.getFat_it());
+        response.setNumeroDipendenti(fornitoreDb.getNumero_dipendenti());
+        response.setRdInterno(fornitoreDb.getRd_interno());
+        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitoreDb.getId()));
+        response.setFatIt(fornitoreDb.getFat_it());
 
         return response;
     }
 
     private List<FornitoreCategoriaSubcategoria> getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(Long id) {
-        if (id == null){
+        if (id == null) {
             return null;
         }
         return fornitoreDao.getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(id);
     }
-
 
 
     private List<NameIdResponse> nameIdToNameIdResponse(List<NameId> allList) {
