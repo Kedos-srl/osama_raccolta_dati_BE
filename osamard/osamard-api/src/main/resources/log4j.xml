@@ -20,7 +20,7 @@
         <param name="BufferSize" value="1"/>
         <param name="SMTPHost" value="172.31.13.65"/>
         <param name="From" value="osamard.error@grupposcai.it"/>
-        <param name="To" value="andrea.zammataro@kedos-srl.it"/>
+        <param name="To" value="andrea.zammataro@kedos-srl.it,elsa.chizzoli@kedos-srl.it"/>
         <param name="Subject" value="osamardApi ${dominioSito} Error Log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{uniqueKeyLog4j}] [%-5p] %C{1} (%L) - %m%n"/>
