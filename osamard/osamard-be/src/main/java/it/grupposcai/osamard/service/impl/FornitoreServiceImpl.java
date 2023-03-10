@@ -3,10 +3,7 @@ package it.grupposcai.osamard.service.impl;
 import it.grupposcai.osamard.bean.*;
 import it.grupposcai.osamard.dao.*;
 import it.grupposcai.osamard.rest.request.FornitoreRequest;
-import it.grupposcai.osamard.rest.response.FornitoreResponse;
-import it.grupposcai.osamard.rest.response.FornitoreSubcategoriaResponse;
-import it.grupposcai.osamard.rest.response.ItemFormResponse;
-import it.grupposcai.osamard.rest.response.NameIdResponse;
+import it.grupposcai.osamard.rest.response.*;
 import it.grupposcai.osamard.service.*;
 import it.grupposcai.osamard.util.Const;
 import org.apache.log4j.Logger;
@@ -17,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service("fornitoreService")
 public class FornitoreServiceImpl implements FornitoreService {
@@ -204,17 +202,12 @@ public class FornitoreServiceImpl implements FornitoreService {
 
     @Override
     public List<Fornitore> selectAll() {
-        return null;
+        return fornitoreDao.getAll();
     }
 
     @Override
-    public List<Fornitore> selectAllEnabled() {
-        return null;
-    }
-
-    @Override
-    public Fornitore selectById(Fornitore fornitore) {
-        return null;
+    public Fornitore selectById(Long id) {
+        return fornitoreDao.getById(id);
     }
 
     @Override
@@ -253,11 +246,29 @@ public class FornitoreServiceImpl implements FornitoreService {
 
     @Override
     public FornitoreResponse getById(FornitoreRequest request) {
-        Fornitore fornitore = fornitoreDao.getById(request.getId());
+        Fornitore fornitore = selectById(request.getId());
         if (fornitore == null) {
             throw new RuntimeException("Fornitore non trovato");
         }
         return fornitoreToFornitoreResponse(fornitore);
+    }
+
+    @Override
+    public SearchResponseCommon searchFornitori(Map<String, Object> searchCriteria) {
+
+        List<Fornitore> fornitoreList = getFornitoriBySearchCriteria(searchCriteria);
+        SearchResponseCommon resp = new SearchResponseCommon();
+        resp.setResponses(new ArrayList<>());
+        if (fornitoreList == null || fornitoreList.isEmpty()){
+            return resp;
+        }
+        fornitoreList.forEach(fornitore -> resp.getResponses().add(fornitoreToFornitoreResponseForSearch(fornitore)));
+        resp.setNumRecordTotali(fornitoreDao.countFornitoriBySearchCriteria(searchCriteria));
+        return resp;
+    }
+
+    private List<Fornitore> getFornitoriBySearchCriteria(Map<String, Object> searchCriteria) {
+        return fornitoreDao.getFornitoriBySearchCriteria(searchCriteria);
     }
 
     private FornitoreResponse fornitoreToFornitoreResponse(Fornitore fornitore) {
@@ -279,6 +290,23 @@ public class FornitoreServiceImpl implements FornitoreService {
         response.setCertificazioniFabbrica(certificazioniFabbricaService.selectCertificazioneFabbricaResponseByIdFornitore(fornitore.getId()));
         response.setCertificazioniMateriali(certificazioniMaterialiService.selectCertificazioneMaterialiResponseByIdFornitore(fornitore.getId()));
 
+        response.setFatIt(fornitore.getFat_it());
+
+        return response;
+    }
+
+    private FornitoreResponse fornitoreToFornitoreResponseForSearch(Fornitore fornitore) {
+        FornitoreResponse response = new FornitoreResponse();
+
+        response.setId(fornitore.getId());
+        response.setRagioneSociale(fornitore.getRagione_sociale());
+        response.setTempoMercato(fornitore.getTempo_mercato());
+        response.setCategoriaList(fornitoreCategoriaService.getFornitoreCategoriaResponseByCategorieAssociate(getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(fornitore.getId())));
+        response.setFatTot(fornitore.getFat_tot());
+        response.setFatIt(fornitore.getFat_it());
+        response.setNumeroDipendenti(fornitore.getNumero_dipendenti());
+        response.setRdInterno(fornitore.getRd_interno());
+        response.setFornitoreGeolocalizzazione(fornitoreGeolocalizzazioneService.getFornitoreGeolocalizzazioneResponseByIdFornitore(fornitore.getId()));
         response.setFatIt(fornitore.getFat_it());
 
         return response;

@@ -5,6 +5,7 @@ import it.grupposcai.osamard.rest.request.FornitoreRequest;
 import it.grupposcai.osamard.rest.request.SearchFornitoreRequest;
 import it.grupposcai.osamard.rest.response.FornitoreResponse;
 import it.grupposcai.osamard.rest.response.ItemFormResponse;
+import it.grupposcai.osamard.rest.response.SearchResponseCommon;
 import it.grupposcai.osamard.rest.response.WarningResponse;
 import it.grupposcai.osamard.service.FornitoreService;
 import it.grupposcai.osamard.service.UtenteService;
@@ -63,12 +64,12 @@ public class FornitoreController extends AbstractController {
 
             return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.INSERT_OK));
         } catch (Exception e) {
+            logger.error("--- save ---  ERROR = \n ", e);
             return CommonsUtils.printAndReturnError(logger, "logout", e);
         }
     }
 
 
-    // getById
     @PostMapping(value = "/getById")
     public @ResponseBody
     RESTResponse getById(@RequestBody FornitoreRequest request) {
@@ -87,112 +88,32 @@ public class FornitoreController extends AbstractController {
             FornitoreResponse resp = fornitoreService.getById(request);
 
             return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.SEARCH_SUCCESS));
-        } catch (RuntimeException e) {
-            return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.NO_DATA_FOUND));
         } catch (Exception e) {
+            logger.error("--- getById ---  ERROR = \n ", e);
             return CommonsUtils.printAndReturnError(logger, "logout", e);
         }
     }
 
-//
-//    @RequestMapping(value = "/searchFornitori", method = RequestMethod.POST)
-//    public @ResponseBody
-//    RESTResponse searchUtentiPerProfilo(@RequestBody SearchFornitoreRequest request) {
-//
-//        try {
-//            logger.debug("--- searchFornitori---  input request = \n " + JsonUtils.convertObjToJsonString(request));
-//            if (super.checkIfTokenIsValid(request.getToken())) {
-//
-//                Long idUser = super.getIdUserFromToken(request.getToken());
-//
-//                if (utenteService.isAutorizzato(idUser, Const.TipoServizio.LIST)) {
-//
-//
-//                    Map<Long, String> categorie = new HashMap<Long, String>();
-//                    Map<Long, String> subcategorie = new HashMap<Long, String>();
-//
-//
-//                    List<FornitoreCategoria> listCategorie = fornitoreCategoriaService.selectAll();
-//
-//                    if (listCategorie != null && listCategorie.size() > 0) {
-//                        for (FornitoreCategoria fc : listCategorie) {
-//                            FornitoreCategoriaMultilingua fcm = new FornitoreCategoriaMultilingua();
-//                            fcm = fornitoreCategoriaService.selectByIdAndLanguage(fc.getId(), "IT");
-//                            if (fcm != null)
-//                                categorie.put(fc.getId(), fcm.getTitolo());
-//                        }
-//                    }
-//
-//                    List<FornitoreSubcategoria> listSubcategorie = fornitoreSubcategoriaService.selectAll();
-//
-//                    if (listSubcategorie != null && listSubcategorie.size() > 0) {
-//                        for (FornitoreSubcategoria fsc : listSubcategorie) {
-//                            FornitoreSubcategoriaMultilingua fsm = new FornitoreSubcategoriaMultilingua();
-//                            fsm = fornitoreSubcategoriaService.selectByIdAndLanguage(fsc.getId_subcategoria(), "IT");
-//                            if (fsm != null)
-//                                subcategorie.put(fsc.getId_subcategoria(), fsm.getTitolo());
-//                        }
-//                    }
-//
-//                    List<Fornitore> elencoFornitori = fornitoreService.searchFornitori(this.createSearchCriteria(request));
-//
-//                    SearchFornitoreResponse out = new SearchFornitoreResponse();
-//
-//                    if (elencoFornitori != null && elencoFornitori.size() > 0) {
-//
-//                        List<FornitoreResponse> fornitori = ConversionResponseUtils.convertFornitoreResponseList(elencoFornitori, categorie, subcategorie);
-//
-//                        for (FornitoreResponse fornitore : fornitori) {
-//
-//                            List<LinguaCompilataResponse> lingueCompilate = new ArrayList<LinguaCompilataResponse>();
-//
-//                            if (fornitore != null) {
-//                                List<FornitoreMultilingua> fml = new ArrayList<FornitoreMultilingua>();
-//
-//                                fml = fornitoreService.selectAllByIdFornitore(fornitore.getIdFornitore());
-//
-//                                for (FornitoreMultilingua fm : fml) {
-//
-//                                    if (fm != null) {
-//                                        LinguaCompilataResponse lcr = new LinguaCompilataResponse();
-//                                        lcr.setCdLingua(fm.getCd_lingua());
-//                                        if (fm.getDescrizione() != null) {
-//                                            lcr.setCompilata(!fm.isDisabled());
-//                                        } else {
-//                                            lcr.setCompilata(false);
-//                                        }
-//                                        lingueCompilate.add(lcr);
-//                                    }
-//                                }
-//
-//                                fornitore.setLingueCompilate(lingueCompilate);
-//                            }
-//
-//
-//                        }
-//
-//                        out.setFornitori(fornitori);
-//
-//                        out.setNumRecordTotali(fornitoreService.countFornitori(this.createSearchCriteria(request)));
-//
-//                        return new RESTResponse(HttpStatus.OK.name(), out, super.getMessageFromSource(Const.SEARCH_SUCCESS, request.getLanguage()));
-//                    } else {
-//                        return new RESTResponse(HttpStatus.OK.name(), null, super.getMessageFromSource(Const.NO_DATA_FOUND, request.getLanguage()));
-//                    }
-//
-//                } else {
-//                    return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.UNAUTHORIZED, request.getLanguage()));
-//                }
-//
-//            } else {
-//                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION, request.getLanguage()));
-//            }
-//        } catch (Exception e) {
-//            return CommonsUtils.printAndReturnError(logger, "searchFornitori", e);
-//        }
-//
-//    }
-//
+    @PostMapping(value = "/searchFornitori")
+    public @ResponseBody
+    RESTResponse searchFornitori(@RequestBody SearchFornitoreRequest request) {
+
+        try {
+            logger.debug("--- searchFornitori ---  input request = \n " + JsonUtils.convertObjToJsonString(request));
+            if (!super.checkIfTokenIsValid(request.getToken())) {
+                return new RESTResponse(Const.ESITO_KO, null, super.getMessageFromSource(Const.INVALID_SESSION));
+            }
+
+            SearchResponseCommon elencoFornitori = fornitoreService.searchFornitori(this.createSearchCriteria(request));
+
+            return new RESTResponse(HttpStatus.OK.name(), elencoFornitori, super.getMessageFromSource(Const.SEARCH_SUCCESS));
+
+        } catch (Exception e) {
+            logger.error("--- searchFornitori ---  ERROR = \n ", e);
+            return CommonsUtils.printAndReturnError(logger, "logout", e);
+        }
+    }
+
 
     @PostMapping(value = "/getItemsForm")
     public @ResponseBody
@@ -207,23 +128,26 @@ public class FornitoreController extends AbstractController {
 
             return new RESTResponse(HttpStatus.OK.name(), resp, super.getMessageFromSource(Const.REQUEST_SUCCESS));
         } catch (Exception e) {
+            logger.error("--- getItemsForm ---  ERROR = \n ", e);
             return CommonsUtils.printAndReturnError(logger, "logout", e);
         }
     }
 
 
-    @SuppressWarnings("unlikely-arg-type")
     private Map<String, Object> createSearchCriteria(SearchFornitoreRequest request) {
         Map<String, Object> params = new HashMap<String, Object>();
 
-        if (request.getTipologia() != null) {
-            params.put("tipologia", request.getTipologia());
+        if (request.getRagioneSociale() != null) {
+            params.put("ragioneSociale", request.getRagioneSociale());
         }
 
-        if (!StringUtils.isEmpty(request.getRagioneSociale())) {
-            params.put("ragione_sociale", request.getRagioneSociale().replaceAll("'", "''"));
+        if (request.getIdCategoria() != null) {
+            params.put("idCategoria", request.getIdCategoria());
         }
 
+        if (request.getCitta() != null) {
+            params.put("citta", request.getCitta());
+        }
 
         if (request.getDisabled() != null) {
             params.put("disabled", request.getDisabled());
@@ -232,15 +156,14 @@ public class FornitoreController extends AbstractController {
         if (request.getOrderBy() != null && !request.getOrderBy().equals("")) {
             params.put("orderBy", request.getOrderBy());
         } else {
-            //default remail
-            params.put("orderBy", "ragione_sociale");
+            params.put("orderBy", "dt_inserimento");
         }
 
         if (request.getOrderType() != null && !request.getOrderType().equals("")) {
             params.put("orderType", request.getOrderType());
         } else {
-            //default asc
-            params.put("orderType", "asc");
+            //default desc
+            params.put("orderType", "desc");
         }
 
         if (request.getNumRecordIniziale() != null) {
@@ -267,7 +190,7 @@ public class FornitoreController extends AbstractController {
     private List<WarningResponse> checkInputFornitoreSave(FornitoreRequest request) {
         List<WarningResponse> warningResponses = new ArrayList<>();
 
-        //TODO ZAMMA Aggiungere campi obbligatori
+        //TODO Aggiungere campi obbligatori
 
 //        if (request.getEmail() == null || request.getEmail().equals("")) {
 //            WarningResponse warningResponse = new WarningResponse("EMAIL", super.getMessageFromSource("required.field"));

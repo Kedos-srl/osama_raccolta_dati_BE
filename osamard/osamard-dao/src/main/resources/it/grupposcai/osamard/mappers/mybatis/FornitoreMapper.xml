@@ -3,4 +3,45 @@
 <mapper namespace="it.grupposcai.osamard.dao.FornitoreDao">
 
 
+    <select id="getFornitoriBySearchCriteria" parameterType="java.util.Map" resultType="it.grupposcai.osamard.bean.Fornitore">
+        select f.*
+        from fornitore f
+        <include refid="getFornitoriBySearchCriteriaCondition"/>
+        order by ${orderBy} ${orderType}
+        offset ${numRecordIniziale} rows
+        fetch next ${numRecordDaEstrarre} rows only
+    </select>
+    <select id="countFornitoriBySearchCriteria" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(*)
+        from fornitore f
+        <include refid="getFornitoriBySearchCriteriaCondition"/>
+    </select>
+
+    <sql id="getFornitoriBySearchCriteriaCondition">
+        left join fornitore_geolocalizzazione fg
+        on f.id = fg.id_fornitore
+
+        WHERE 456 = 456
+        <if test="ragioneSociale != null ">
+            AND f.ragione_sociale like '%${ragioneSociale}%'
+        </if>
+
+        <if test="idCategoria != null">
+<!--        Ho dovuto fare una sub query per evitare righe duplicate dovute alle categorie multiple -->
+            AND f.id in (
+            select fcs.id_fornitore
+            from fornitore_categoria_subcategoria fcs
+            inner join fornitore f
+            on f.id = fcs.id_fornitore
+            where fcs.id_categoria = ${idCategoria})
+        </if>
+
+        <if test="citta != null">
+            AND fg.citta like '%${citta}%'
+        </if>
+
+        <if test="disabled != null">
+            AND f.disabled = ${disabled}
+        </if>
+    </sql>
 </mapper>

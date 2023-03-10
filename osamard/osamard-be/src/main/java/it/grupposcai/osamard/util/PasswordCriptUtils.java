@@ -57,7 +57,6 @@ public final class PasswordCriptUtils {
         return "";
     }
 
-    // TODO: Qua genera le password!
     public static void main(String args[]) throws Exception {
         String a = cripta("hfuiog7ewg3!few6");
         System.out.println(a);

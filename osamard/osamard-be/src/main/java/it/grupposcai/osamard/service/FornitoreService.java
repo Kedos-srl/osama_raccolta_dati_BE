@@ -4,20 +4,22 @@ import it.grupposcai.osamard.bean.Fornitore;
 import it.grupposcai.osamard.rest.request.FornitoreRequest;
 import it.grupposcai.osamard.rest.response.FornitoreResponse;
 import it.grupposcai.osamard.rest.response.ItemFormResponse;
+import it.grupposcai.osamard.rest.response.SearchResponseCommon;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FornitoreService {
 
-    public List<Fornitore> selectAll();
+    List<Fornitore> selectAll();
 
-    public List<Fornitore> selectAllEnabled();
-
-    public Fornitore selectById(Fornitore fornitore);
+    Fornitore selectById(Long id);
 
     ItemFormResponse getItemsForm();
 
     FornitoreResponse save(FornitoreRequest request);
 
     FornitoreResponse getById(FornitoreRequest request);
+
+    SearchResponseCommon searchFornitori(Map<String, Object> searchCriteria);
 }

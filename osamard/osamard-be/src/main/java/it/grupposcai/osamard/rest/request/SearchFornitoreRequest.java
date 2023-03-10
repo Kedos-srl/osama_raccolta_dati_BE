@@ -4,7 +4,8 @@ public class SearchFornitoreRequest extends CommonAttributeRequest {
     private static final long serialVersionUID = 1L;
 
     private String ragioneSociale;
-    private String tipologia;
+    private Long idCategoria;
+    private String citta;
     private String orderBy;
     private String orderType;
     private Long numRecordIniziale;
@@ -16,6 +17,22 @@ public class SearchFornitoreRequest extends CommonAttributeRequest {
 
     public void setRagioneSociale(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
+    }
+
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getCitta() {
+        return citta;
+    }
+
+    public void setCitta(String citta) {
+        this.citta = citta;
     }
 
     public String getOrderBy() {
@@ -49,14 +66,4 @@ public class SearchFornitoreRequest extends CommonAttributeRequest {
     public void setNumRecordDaEstrarre(Long numRecordDaEstrarre) {
         this.numRecordDaEstrarre = numRecordDaEstrarre;
     }
-
-    public String getTipologia() {
-        return tipologia;
-    }
-
-    public void setTipologia(String tipologia) {
-        this.tipologia = tipologia;
-    }
-
-
 }

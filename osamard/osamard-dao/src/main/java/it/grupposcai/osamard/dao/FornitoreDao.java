@@ -5,6 +5,7 @@ import it.grupposcai.osamard.bean.FornitoreCategoriaSubcategoria;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FornitoreDao {
     @Insert("insert into fornitore "
@@ -42,4 +43,8 @@ public interface FornitoreDao {
             " where fcs.id_fornitore = #{id} " +
             " group by fcs.id_categoria, fcs.id_fornitore ")
     List<FornitoreCategoriaSubcategoria> getFornitoreCategoriaByIdFornitoreGroupByIdCategoria(Long id);
+
+    List<Fornitore> getFornitoriBySearchCriteria(Map<String, Object> searchCriteria);
+
+    Long countFornitoriBySearchCriteria(Map<String, Object> searchCriteria);
 }
