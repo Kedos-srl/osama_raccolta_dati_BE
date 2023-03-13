@@ -12,6 +12,9 @@ public interface ProdottoService {
     @Transactional
     Prodotto insert(ProdottoRequest request);
 
+    @Transactional
+    Prodotto update(ProdottoRequest request);
+
     List<Prodotto> getProdottoByIdFornitore(Long idFornitore);
 
     Prodotto getProdottoById(Long id);

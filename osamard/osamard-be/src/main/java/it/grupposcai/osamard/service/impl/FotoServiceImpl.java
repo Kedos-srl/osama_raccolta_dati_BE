@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,34 +67,46 @@ public class FotoServiceImpl implements FotoService {
     public FotoResponse getFotoResponseById(Long id) {
 
         Foto foto = getFotoById(id);
-        if (foto == null){
+        if (foto == null) {
             return null;
         }
-        FotoResponse resp = new FotoResponse();
-        resp.setId(foto.getId());
-        resp.setTitolo(foto.getTitolo());
-        resp.setIdOggetto(foto.getId_oggetto());
-        resp.setIdTipoOggetto(foto.getId_tipo_oggetto());
-        resp.setPathFile(foto.getPath_file());
-
-        resp.setDisabled(foto.isDisabled());
-        resp.setDtInserimento(foto.getDt_inserimento());
-        resp.setDtModifica(foto.getDt_modifica());
-        resp.setLastUserModified(foto.getLast_user_modified());
-        resp.setFirstUser(foto.getFirst_user());
-        return resp;
+        return fotoToFotoResponse(foto);
     }
-    
+
     @Override
     public List<FotoResponse> getFotoResponseByIdOggettoAndTipoOggetto(Long idOggetto, Long idFotoTipoOggetto) {
         List<Foto> fotoList = getFotoByIdOggettoAndTipoOggetto(idOggetto, idFotoTipoOggetto);
         List<FotoResponse> responseList = new ArrayList<>();
-        if (fotoList != null && !fotoList.isEmpty()){
+        if (fotoList != null && !fotoList.isEmpty()) {
             fotoList.forEach(foto -> {
                 responseList.add(getFotoResponseById(foto.getId()));
             });
         }
         return responseList;
+    }
+
+    @Override
+    public FotoResponse save(FotoRequest fotoRequest) throws Exception {
+
+        fotoRequest.setDisabled(false);
+        fotoRequest.setDtInserimento(LocalDateTime.now());
+        fotoRequest.setDtModifica(LocalDateTime.now());
+
+        Foto foto = insert(fotoRequest);
+
+        return fotoToFotoResponse(foto);
+    }
+
+    @Override
+    public void delete(FotoRequest request) {
+        Foto foto = fotoDao.getFotoByIdAndIdOggettoAndIdTipoOggetto(request.getId(), request.getIdOggetto(), request.getIdTipoOggetto());
+        if (foto == null){
+            throw new RuntimeException("Foto non trovata");
+        }
+        if(FileUtility.deleteFile(filePathExternal + foto.getPath_file())){
+            fotoDao.deleteFotoById(foto.getId());
+        }
+
     }
 
     private Foto fotoRequestToFoto(FotoRequest request) {
@@ -110,6 +123,22 @@ public class FotoServiceImpl implements FotoService {
         foto.setLast_user_modified(request.getLastUserModified());
 
         return foto;
+    }
+
+    private FotoResponse fotoToFotoResponse(Foto foto){
+        FotoResponse resp = new FotoResponse();
+        resp.setId(foto.getId());
+        resp.setTitolo(foto.getTitolo());
+        resp.setIdOggetto(foto.getId_oggetto());
+        resp.setIdTipoOggetto(foto.getId_tipo_oggetto());
+        resp.setPathFile(foto.getPath_file());
+
+        resp.setDisabled(foto.isDisabled());
+        resp.setDtInserimento(foto.getDt_inserimento());
+        resp.setDtModifica(foto.getDt_modifica());
+        resp.setLastUserModified(foto.getLast_user_modified());
+        resp.setFirstUser(foto.getFirst_user());
+        return  resp;
     }
 
 }

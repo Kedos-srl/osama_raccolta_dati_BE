@@ -60,6 +60,23 @@ public class ProdottoServiceImpl implements ProdottoService {
     }
 
     @Override
+    @Transactional
+    public Prodotto update(ProdottoRequest request) {
+
+        if (request == null){
+            return null;
+        }
+        Prodotto prodotto = getProdottoById(request.getId());
+        if (prodotto == null) {
+            return insert(request);
+        }
+
+        prodotto = prodottoRequestToProdotto(request);
+        prodottoDao.update(prodotto);
+        return prodotto;
+    }
+
+    @Override
     public List<Prodotto> getProdottoByIdFornitore(Long idFornitore) {
         if (idFornitore == null) {
             return null;

@@ -24,6 +24,7 @@ public final class Const {
     public static final String VALIDATION_OK = "validation.ok";
     public static final String DATA_ALREADY_EXISTS = "non.unique.value";
     public static final String DEFAULT_LANGUAGE = "IT";
+    public static final String DELETE_SUCCESS = "delete.success";
 
     public static class Oggetto {
         public static final Long PRODOTTO = 1l;

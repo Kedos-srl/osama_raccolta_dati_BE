@@ -310,7 +310,7 @@ public class FornitoreServiceImpl implements FornitoreService {
 //                prodottoRequest.setDtModifica(LocalDateTime.now());
 //                prodottoRequest.setFirstUser(request.getFirstUser());
 //                prodottoRequest.setLastUserModified(request.getLastUserModified());
-//                prodottoService.insert(prodottoRequest);
+//                prodottoService.update(prodottoRequest);
 //            });
 //        }
         return fornitoreDb;

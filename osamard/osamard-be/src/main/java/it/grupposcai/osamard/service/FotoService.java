@@ -20,4 +20,8 @@ public interface FotoService {
     FotoResponse getFotoResponseById(Long id);
 
     List<FotoResponse> getFotoResponseByIdOggettoAndTipoOggetto(Long id, Long prodotto);
+
+    FotoResponse save(FotoRequest request) throws Exception;
+
+    void delete(FotoRequest request);
 }

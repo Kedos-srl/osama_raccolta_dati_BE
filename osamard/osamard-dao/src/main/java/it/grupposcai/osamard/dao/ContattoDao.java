@@ -1,6 +1,6 @@
 package it.grupposcai.osamard.dao;
 
-import it.grupposcai.osamard.bean.Contatto;
+    import it.grupposcai.osamard.bean.Contatto;
 import org.apache.ibatis.annotations.*;
 
 public interface ContattoDao {
